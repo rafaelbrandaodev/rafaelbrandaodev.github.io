@@ -21,8 +21,6 @@ assets/
 ferramentas/
   capturar_telas.py            gera as capturas de todos os projetos (não faz parte do site)
   gerar_compartilhamento.py    gera o ícone e as imagens de prévia de link (assets/img/compartilhar/)
-PRODUCT.md                     para quem é o site, o que ele afirma e o que não pode ser inventado
-DESIGN.md                      o sistema visual: cores, tipografia, layout e componentes
 ```
 
 Para ver localmente, abra o `index.html` no navegador. Nada precisa ser instalado.
@@ -36,7 +34,7 @@ Hoje não há nenhuma. As tags de prévia de link (`og:url` e `og:image`), no `<
 ## Adicionar um projeto
 
 1. Copie um dos arquivos de `projetos/` com o nome do novo projeto e troque o conteúdo. O menu é o mesmo em todos (Projetos, Como funciona, Decisões, Telas, Contato); tire só o item da seção que a página não tiver.
-2. Coloque as capturas em `assets/img/<nome-do-projeto>/`, e gere as versões menores com `python ferramentas/capturar_telas.py --so-reduzir`. Cada tela entra num aparelho (janela, tablet ou celular); veja o `DESIGN.md`.
+2. Coloque as capturas em `assets/img/<nome-do-projeto>/`, e gere as versões menores com `python ferramentas/capturar_telas.py --so-reduzir`. Cada tela entra num aparelho (janela, tablet ou celular).
 3. Adicione um bloco `<a class="projeto">` com a `.capa` do projeto dentro de `.projetos`, no `index.html`. A capa alterna de lado sozinha; componha-a diferente das outras.
 4. No fim de cada estudo de caso, o link "Próximo projeto" forma um ciclo: aponte o do último projeto para o novo, e o do novo para o primeiro. Troque também o assunto do e-mail (`?subject=`) pelo nome do projeto.
 
