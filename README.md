@@ -29,7 +29,7 @@ Para ver localmente, abra o `index.html` no navegador. Nada precisa ser instalad
 
 Procure por `a-definir` nos arquivos `.html`: é a marca usada para conteúdo pendente, e não deve sobrar nenhuma.
 
-Hoje não há nenhuma. As tags de prévia de link (`og:url` e `og:image`), no `<head>` de cada página, apontam para `https://rbrafazin.github.io/portfolio/`; WhatsApp, LinkedIn e afins só mostram a imagem de prévia com o endereço completo. Se o site mudar de endereço (um domínio próprio, por exemplo), troque nas quatro páginas.
+Hoje não há nenhuma. As tags de prévia de link (`og:url` e `og:image`), no `<head>` de cada página, apontam para `https://rafaelbrandaodev.github.io/`; WhatsApp, LinkedIn e afins só mostram a imagem de prévia com o endereço completo. Se o site mudar de endereço (um domínio próprio, por exemplo), troque nas quatro páginas.
 
 ## Adicionar um projeto
 
@@ -99,14 +99,14 @@ Depois de capturar, o roteiro gera versões de cada captura em 320, 480, 640, 96
 
 Qualquer hospedagem de site estático serve. No GitHub Pages:
 
-1. O repositório é `https://github.com/rbrafazin/portfolio`, **público**, criado vazio (sem README, sem `.gitignore`, sem licença).
+1. O repositório é `https://github.com/rafaelbrandaodev/rafaelbrandaodev.github.io`, **público**, criado vazio (sem README, sem `.gitignore`, sem licença).
 2. Na pasta do portfólio:
    ```bash
-   git remote add origin https://github.com/rbrafazin/portfolio.git
+   git remote add origin https://github.com/rafaelbrandaodev/rafaelbrandaodev.github.io.git
    git push -u origin main
    ```
    Na primeira vez o Git abre o navegador para você entrar na conta do GitHub.
-3. No repositório, **Settings → Pages → Build and deployment**: em *Source* escolha **Deploy from a branch**, branch `main`, pasta `/ (root)`, e salve. Em um ou dois minutos o site fica em `https://rbrafazin.github.io/portfolio/`.
+3. No repositório, **Settings → Pages → Build and deployment**: em *Source* escolha **Deploy from a branch**, branch `main`, pasta `/ (root)`, e salve. Em um ou dois minutos o site fica em `https://rafaelbrandaodev.github.io/`.
 
 O arquivo `.nojekyll` na raiz faz o GitHub Pages servir os arquivos como estão, sem processá-los.
 
