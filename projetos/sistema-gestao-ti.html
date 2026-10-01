@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de gestão de T.I — Rafael Brandão</title>
+<meta name="description" content="Estudo de caso: sistema interno de gestão de T.I em Django, com chamados, inventário, almoxarifado e patrimônio.">
+<meta name="theme-color" content="#070F1C">
+<link rel="icon" href="../assets/icones/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/icones/icone-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/icones/icone-180.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Rafael Brandão">
+<meta property="og:title" content="Sistema de gestão de T.I — Rafael Brandão">
+<meta property="og:description" content="Estudo de caso: sistema interno de gestão de T.I em Django, com chamados, inventário, almoxarifado e patrimônio.">
+<meta property="og:url" content="https://rbrafazin.github.io/portfolio/projetos/sistema-gestao-ti.html">
+<meta property="og:image" content="https://rbrafazin.github.io/portfolio/assets/img/compartilhar/sistema-gestao-ti.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Fila de chamados do sistema de gestão de T.I, com o histórico de um chamado sobreposto">
+<meta name="twitter:card" content="summary_large_image">
+<!--
+  Projeto mostrado de forma anônima: sem nome, logo, setores ou e-mails da instituição.
+  As telas são a área de conteúdo do sistema, sem a barra do topo e a lateral.
+-->
+<link rel="stylesheet" href="../assets/css/estilo.css">
+<link rel="stylesheet" href="../assets/css/estudo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="nav" id="nav">
+  <div class="container">
+    <a href="../index.html" class="marca">Rafael Brandão</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav-links" id="nav-links" aria-label="Seções">
+      <a href="../index.html#projetos">Projetos</a>
+      <a href="#fluxo">Como funciona</a>
+      <a href="#telas">Telas</a>
+      <a href="#decisoes">Decisões</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <div class="topo escuro">
+    <div class="container">
+      <a class="voltar" href="../index.html#projetos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Todos os projetos</a>
+      <h1>Sistema de gestão de T.I</h1>
+      <p class="sub">Plataforma interna para gestão de T.I, reunindo chamados, atendimento, equipamentos, almoxarifado e patrimônio em um único sistema.</p>
+      <dl class="ficha">
+        <div><dt>Tecnologias</dt><dd><ul class="etiquetas"><li>Python</li><li>Django</li><li>PostgreSQL</li><li>Docker</li></ul></dd></div>
+        <div><dt>Ano</dt><dd>2026</dd></div>
+      </dl>
+      <div class="topo-tela">
+        <div class="capa capa-ti">
+          <button type="button" class="janela capa-principal ampliavel" data-titulo="Fila de chamados da T.I"><span class="janela-barra">Chamados</span><img src="../assets/img/sistema-ti/chamados-fila.png" srcset="../assets/img/sistema-ti/chamados-fila-160.webp 160w, ../assets/img/sistema-ti/chamados-fila-240.webp 240w, ../assets/img/sistema-ti/chamados-fila-320.webp 320w, ../assets/img/sistema-ti/chamados-fila-480.webp 480w, ../assets/img/sistema-ti/chamados-fila-640.webp 640w, ../assets/img/sistema-ti/chamados-fila-960.webp 960w, ../assets/img/sistema-ti/chamados-fila-1280.webp 1280w, ../assets/img/sistema-ti/chamados-fila-1920.webp 1920w, ../assets/img/sistema-ti/chamados-fila.png 2560w" sizes="(max-width:880px) 75vw, (max-width:1208px) 72vw, 734px" alt="Fila de chamados da equipe de T.I com título, solicitante, setor e situação de cada pedido" width="2560" height="1280"></button>
+          <button type="button" class="janela capa-peca ampliavel" data-titulo="Detalhe de um chamado"><span class="janela-barra">Chamado #4</span><img src="../assets/img/sistema-ti/chamado-detalhe.png" srcset="../assets/img/sistema-ti/chamado-detalhe-160.webp 160w, ../assets/img/sistema-ti/chamado-detalhe-240.webp 240w, ../assets/img/sistema-ti/chamado-detalhe-320.webp 320w, ../assets/img/sistema-ti/chamado-detalhe-480.webp 480w, ../assets/img/sistema-ti/chamado-detalhe-640.webp 640w, ../assets/img/sistema-ti/chamado-detalhe-960.webp 960w, ../assets/img/sistema-ti/chamado-detalhe-1280.webp 1280w, ../assets/img/sistema-ti/chamado-detalhe-1920.webp 1920w, ../assets/img/sistema-ti/chamado-detalhe.png 2560w" sizes="(max-width:880px) 43vw, (max-width:1208px) 41vw, 421px" alt="Histórico de um chamado, com cada mudança de situação, a data e quem alterou" width="2560" height="1380"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="contexto">
+    <div class="container">
+      <div class="titulo-sec"><h2>O que o sistema precisava resolver</h2></div>
+      <div class="texto-longo">
+        <ul class="objetivos">
+          <li>Centralizar o atendimento da T.I em um único sistema.</li>
+          <li>Organizar equipamentos e controlar os estoques dos setores.</li>
+          <li>Definir acessos de acordo com a função de cada usuário.</li>
+          <li>E manter toda a operação dentro da rede interna.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fluxo">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Um chamado, do pedido à solução</h2>
+        <p>O caminho principal do sistema, em três telas.</p>
+      </div>
+      <div class="passos iguais">
+        <div>
+          <h3>O funcionário abre o pedido</h3>
+          <p>Pelo Portal, onde também acompanha a situação.</p>
+          <button type="button" class="janela ampliavel" data-titulo="Portal: abrir chamado"><span class="janela-barra">Portal · Abrir chamado</span><img src="../assets/img/sistema-ti/portal-abrir.png" srcset="../assets/img/sistema-ti/portal-abrir-160.webp 160w, ../assets/img/sistema-ti/portal-abrir-240.webp 240w, ../assets/img/sistema-ti/portal-abrir-320.webp 320w, ../assets/img/sistema-ti/portal-abrir-480.webp 480w, ../assets/img/sistema-ti/portal-abrir-640.webp 640w, ../assets/img/sistema-ti/portal-abrir-960.webp 960w, ../assets/img/sistema-ti/portal-abrir-1280.webp 1280w, ../assets/img/sistema-ti/portal-abrir.png 1408w" sizes="(max-width:880px) 94vw, (max-width:1208px) 29vw, 347px" alt="Formulário Abrir Chamado preenchido com título e descrição, com campo para anexar imagem" width="1408" height="1108" loading="lazy"></button>
+        </div>
+        <div>
+          <h3>A T.I recebe na fila</h3>
+          <p>Com setor, técnico e aviso por e-mail.</p>
+          <button type="button" class="janela ampliavel" data-titulo="Fila de chamados da T.I"><span class="janela-barra">Chamados</span><img src="../assets/img/sistema-ti/chamados-fila.png" srcset="../assets/img/sistema-ti/chamados-fila-160.webp 160w, ../assets/img/sistema-ti/chamados-fila-240.webp 240w, ../assets/img/sistema-ti/chamados-fila-320.webp 320w, ../assets/img/sistema-ti/chamados-fila-480.webp 480w, ../assets/img/sistema-ti/chamados-fila-640.webp 640w, ../assets/img/sistema-ti/chamados-fila-960.webp 960w, ../assets/img/sistema-ti/chamados-fila-1280.webp 1280w, ../assets/img/sistema-ti/chamados-fila-1920.webp 1920w, ../assets/img/sistema-ti/chamados-fila.png 2560w" sizes="(max-width:880px) 94vw, (max-width:1208px) 29vw, 347px" alt="Fila de chamados da equipe de T.I com título, solicitante, setor e situação de cada pedido" width="2560" height="1280"></button>
+        </div>
+        <div>
+          <h3>O técnico registra a solução</h3>
+          <p>Cada mudança entra no histórico, com data e autor.</p>
+          <button type="button" class="janela ampliavel" data-titulo="Detalhe de um chamado"><span class="janela-barra">Chamado #4</span><img src="../assets/img/sistema-ti/chamado-detalhe.png" srcset="../assets/img/sistema-ti/chamado-detalhe-160.webp 160w, ../assets/img/sistema-ti/chamado-detalhe-240.webp 240w, ../assets/img/sistema-ti/chamado-detalhe-320.webp 320w, ../assets/img/sistema-ti/chamado-detalhe-480.webp 480w, ../assets/img/sistema-ti/chamado-detalhe-640.webp 640w, ../assets/img/sistema-ti/chamado-detalhe-960.webp 960w, ../assets/img/sistema-ti/chamado-detalhe-1280.webp 1280w, ../assets/img/sistema-ti/chamado-detalhe-1920.webp 1920w, ../assets/img/sistema-ti/chamado-detalhe.png 2560w" sizes="(max-width:880px) 94vw, (max-width:1208px) 29vw, 347px" alt="Histórico de um chamado, com cada mudança de situação, a data e quem alterou" width="2560" height="1380"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="telas">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Mais telas</h2>
+        <p>Passe para o lado para ver as 12 telas. Toque ou clique em uma para vê-la no tamanho real.</p>
+      </div>
+      <div class="carrossel" data-carrossel>
+        <div class="miniaturas carrossel-trilho" tabindex="0" aria-label="Telas do sistema; role para o lado para ver todas">
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Dashboard"><span class="janela-barra">Dashboard</span><img src="../assets/img/sistema-ti/telas/dashboard.png" srcset="../assets/img/sistema-ti/telas/dashboard-160.webp 160w, ../assets/img/sistema-ti/telas/dashboard-240.webp 240w, ../assets/img/sistema-ti/telas/dashboard-320.webp 320w, ../assets/img/sistema-ti/telas/dashboard-480.webp 480w, ../assets/img/sistema-ti/telas/dashboard-640.webp 640w, ../assets/img/sistema-ti/telas/dashboard-960.webp 960w, ../assets/img/sistema-ti/telas/dashboard-1280.webp 1280w, ../assets/img/sistema-ti/telas/dashboard.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Dashboard com chamados abertos, críticos, equipamentos ativos, eventos do dia, chamados recentes e tarefas pendentes" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Dashboard</b> Chamados abertos, críticos e tarefas pendentes.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Chamados"><span class="janela-barra">Chamados</span><img src="../assets/img/sistema-ti/telas/chamados.png" srcset="../assets/img/sistema-ti/telas/chamados-160.webp 160w, ../assets/img/sistema-ti/telas/chamados-240.webp 240w, ../assets/img/sistema-ti/telas/chamados-320.webp 320w, ../assets/img/sistema-ti/telas/chamados-480.webp 480w, ../assets/img/sistema-ti/telas/chamados-640.webp 640w, ../assets/img/sistema-ti/telas/chamados-960.webp 960w, ../assets/img/sistema-ti/telas/chamados-1280.webp 1280w, ../assets/img/sistema-ti/telas/chamados.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Lista de chamados com título, solicitante, setor, situação, técnico e data" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Chamados</b> A fila, com setor, situação e técnico de cada pedido.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Inventário"><span class="janela-barra">Inventário</span><img src="../assets/img/sistema-ti/telas/inventario.png" srcset="../assets/img/sistema-ti/telas/inventario-160.webp 160w, ../assets/img/sistema-ti/telas/inventario-240.webp 240w, ../assets/img/sistema-ti/telas/inventario-320.webp 320w, ../assets/img/sistema-ti/telas/inventario-480.webp 480w, ../assets/img/sistema-ti/telas/inventario-640.webp 640w, ../assets/img/sistema-ti/telas/inventario-960.webp 960w, ../assets/img/sistema-ti/telas/inventario-1280.webp 1280w, ../assets/img/sistema-ti/telas/inventario.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Inventário com um cartão por equipamento: patrimônio, modelo, número de série, setor, responsável e valor" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Inventário</b> Configuração, setor e valor de cada equipamento.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Base de Conhecimento"><span class="janela-barra">Base de Conhecimento</span><img src="../assets/img/sistema-ti/telas/base-de-conhecimento.png" srcset="../assets/img/sistema-ti/telas/base-de-conhecimento-160.webp 160w, ../assets/img/sistema-ti/telas/base-de-conhecimento-240.webp 240w, ../assets/img/sistema-ti/telas/base-de-conhecimento-320.webp 320w, ../assets/img/sistema-ti/telas/base-de-conhecimento-480.webp 480w, ../assets/img/sistema-ti/telas/base-de-conhecimento-640.webp 640w, ../assets/img/sistema-ti/telas/base-de-conhecimento-960.webp 960w, ../assets/img/sistema-ti/telas/base-de-conhecimento-1280.webp 1280w, ../assets/img/sistema-ti/telas/base-de-conhecimento.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Base de conhecimento com categorias à esquerda e artigos de software, hardware e redes" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Base de Conhecimento</b> Artigos da equipe, organizados por categoria.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Kanban"><span class="janela-barra">Kanban</span><img src="../assets/img/sistema-ti/telas/kanban.png" srcset="../assets/img/sistema-ti/telas/kanban-160.webp 160w, ../assets/img/sistema-ti/telas/kanban-240.webp 240w, ../assets/img/sistema-ti/telas/kanban-320.webp 320w, ../assets/img/sistema-ti/telas/kanban-480.webp 480w, ../assets/img/sistema-ti/telas/kanban-640.webp 640w, ../assets/img/sistema-ti/telas/kanban-960.webp 960w, ../assets/img/sistema-ti/telas/kanban-1280.webp 1280w, ../assets/img/sistema-ti/telas/kanban.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Quadro Kanban com as colunas A fazer, Em andamento e Concluído, cada tarefa com prioridade, prazo e responsável" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Kanban</b> Tarefas com prioridade, prazo e responsável.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Calendário"><span class="janela-barra">Calendário</span><img src="../assets/img/sistema-ti/telas/calendario.png" srcset="../assets/img/sistema-ti/telas/calendario-160.webp 160w, ../assets/img/sistema-ti/telas/calendario-240.webp 240w, ../assets/img/sistema-ti/telas/calendario-320.webp 320w, ../assets/img/sistema-ti/telas/calendario-480.webp 480w, ../assets/img/sistema-ti/telas/calendario-640.webp 640w, ../assets/img/sistema-ti/telas/calendario-960.webp 960w, ../assets/img/sistema-ti/telas/calendario-1280.webp 1280w, ../assets/img/sistema-ti/telas/calendario.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Calendário do mês com manutenções, reuniões, backups, visitas e vencimentos, e a lista dos próximos eventos" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Calendário</b> Manutenções, backups, visitas e vencimentos.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Portal"><span class="janela-barra">Portal</span><img src="../assets/img/sistema-ti/telas/portal.png" srcset="../assets/img/sistema-ti/telas/portal-160.webp 160w, ../assets/img/sistema-ti/telas/portal-240.webp 240w, ../assets/img/sistema-ti/telas/portal-320.webp 320w, ../assets/img/sistema-ti/telas/portal-480.webp 480w, ../assets/img/sistema-ti/telas/portal-640.webp 640w, ../assets/img/sistema-ti/telas/portal-960.webp 960w, ../assets/img/sistema-ti/telas/portal-1280.webp 1280w, ../assets/img/sistema-ti/telas/portal.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Portal do funcionário com o formulário Abrir Chamado e a lista Meus Chamados" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Portal</b> Onde o funcionário abre e acompanha os pedidos.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Almoxarifado"><span class="janela-barra">Almoxarifado</span><img src="../assets/img/sistema-ti/telas/almoxarifado.png" srcset="../assets/img/sistema-ti/telas/almoxarifado-160.webp 160w, ../assets/img/sistema-ti/telas/almoxarifado-240.webp 240w, ../assets/img/sistema-ti/telas/almoxarifado-320.webp 320w, ../assets/img/sistema-ti/telas/almoxarifado-480.webp 480w, ../assets/img/sistema-ti/telas/almoxarifado-640.webp 640w, ../assets/img/sistema-ti/telas/almoxarifado-960.webp 960w, ../assets/img/sistema-ti/telas/almoxarifado-1280.webp 1280w, ../assets/img/sistema-ti/telas/almoxarifado.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Produtos do almoxarifado em cartões, com categoria, situação do estoque, saldo, preço e fornecedor" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Almoxarifado</b> Produtos com saldo, preço e fornecedor.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Fornecedores"><span class="janela-barra">Fornecedores</span><img src="../assets/img/sistema-ti/telas/fornecedores.png" srcset="../assets/img/sistema-ti/telas/fornecedores-160.webp 160w, ../assets/img/sistema-ti/telas/fornecedores-240.webp 240w, ../assets/img/sistema-ti/telas/fornecedores-320.webp 320w, ../assets/img/sistema-ti/telas/fornecedores-480.webp 480w, ../assets/img/sistema-ti/telas/fornecedores-640.webp 640w, ../assets/img/sistema-ti/telas/fornecedores-960.webp 960w, ../assets/img/sistema-ti/telas/fornecedores-1280.webp 1280w, ../assets/img/sistema-ti/telas/fornecedores.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Lista de fornecedores com empresa, CNPJ, categoria, vendedor e telefone" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Fornecedores</b> CNPJ, categoria e contato de cada fornecedor.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Patrimônios"><span class="janela-barra">Patrimônios</span><img src="../assets/img/sistema-ti/telas/patrimonios.png" srcset="../assets/img/sistema-ti/telas/patrimonios-160.webp 160w, ../assets/img/sistema-ti/telas/patrimonios-240.webp 240w, ../assets/img/sistema-ti/telas/patrimonios-320.webp 320w, ../assets/img/sistema-ti/telas/patrimonios-480.webp 480w, ../assets/img/sistema-ti/telas/patrimonios-640.webp 640w, ../assets/img/sistema-ti/telas/patrimonios-960.webp 960w, ../assets/img/sistema-ti/telas/patrimonios-1280.webp 1280w, ../assets/img/sistema-ti/telas/patrimonios.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Patrimônios em cartões, com código, categoria, situação, modelo, local e valor de cada bem" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Patrimônios</b> Os bens de cada setor, com local e valor.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Movimentações"><span class="janela-barra">Movimentações</span><img src="../assets/img/sistema-ti/telas/movimentacoes.png" srcset="../assets/img/sistema-ti/telas/movimentacoes-160.webp 160w, ../assets/img/sistema-ti/telas/movimentacoes-240.webp 240w, ../assets/img/sistema-ti/telas/movimentacoes-320.webp 320w, ../assets/img/sistema-ti/telas/movimentacoes-480.webp 480w, ../assets/img/sistema-ti/telas/movimentacoes-640.webp 640w, ../assets/img/sistema-ti/telas/movimentacoes-960.webp 960w, ../assets/img/sistema-ti/telas/movimentacoes-1280.webp 1280w, ../assets/img/sistema-ti/telas/movimentacoes.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Histórico de movimentações do almoxarifado com data, produto, tipo, motivo, quantidade, saldo, fornecedor e usuário" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Movimentações</b> Entradas e saídas, com estorno a um clique.</figcaption>
+          </figure>
+          <figure>
+            <button type="button" class="janela ampliavel" data-densidade="1" data-titulo="Usuários"><span class="janela-barra">Usuários</span><img src="../assets/img/sistema-ti/telas/usuarios.png" srcset="../assets/img/sistema-ti/telas/usuarios-160.webp 160w, ../assets/img/sistema-ti/telas/usuarios-240.webp 240w, ../assets/img/sistema-ti/telas/usuarios-320.webp 320w, ../assets/img/sistema-ti/telas/usuarios-480.webp 480w, ../assets/img/sistema-ti/telas/usuarios-640.webp 640w, ../assets/img/sistema-ti/telas/usuarios-960.webp 960w, ../assets/img/sistema-ti/telas/usuarios-1280.webp 1280w, ../assets/img/sistema-ti/telas/usuarios.png 1656w" sizes="(max-width:880px) 46vw, (max-width:1208px) 30vw, 350px" alt="Lista de usuários com nome, e-mail, setor e se é administrador e está ativo" width="1656" height="840" loading="lazy"></button>
+            <figcaption><b>Usuários</b> Cada pessoa com o seu setor e o seu acesso.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="decisoes">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Decisões técnicas</h2>
+        <p>O que não aparece nas telas, mas faz o sistema ser confiável.</p>
+      </div>
+      <ul class="decisoes-grade">
+        <li><span class="tema">Acesso</span>
+          <h3>Permissão por módulo, não por cargo</h3>
+          <p class="na-pratica">Cada pessoa vê e edita só os módulos liberados para ela.</p>
+          <p>Uma única função decide o acesso, checada na URL e de novo em cada tela.</p></li>
+        <li><span class="tema">Estoque</span>
+          <h3>Estoque sem condição de corrida</h3>
+          <p class="na-pratica">Duas saídas ao mesmo tempo não deixam o saldo errado.</p>
+          <p>Entradas, saídas e estornos passam por uma camada de serviço com <code>select_for_update</code>. O estorno lança a operação inversa em vez de apagar, e há testes de concorrência.</p></li>
+        <li><span class="tema">Rastreio</span>
+          <h3>Histórico de cada alteração</h3>
+          <p class="na-pratica">Dá para ver quem mudou o quê, e quando.</p>
+          <p>Chamados, equipamentos, produtos e bens guardam, a cada edição, os campos alterados, a data e o autor.</p></li>
+      </ul>
+      <details class="mais-decisoes">
+        <summary>Ver mais 4 decisões <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <ul class="decisoes-grade duas">
+          <li><span class="tema">Setores</span>
+            <h3>Dois setores, um modelo só</h3>
+            <p class="na-pratica">Um setor acompanha os dois almoxarifados; o outro vê só o seu.</p>
+            <p>Os dois usam as mesmas tabelas, separadas por um campo de setor, e as mesmas views, parametrizadas. O isolamento é assimétrico de propósito.</p></li>
+          <li><span class="tema">Patrimônio</span>
+            <h3>Inventário e patrimônio sempre iguais</h3>
+            <p class="na-pratica">Cadastrar um equipamento de T.I já cria o bem no patrimônio.</p>
+            <p>Um signal cria ou atualiza o bem correspondente e traduz o status entre os dois modelos. O número de patrimônio fica travado depois de criado.</p></li>
+          <li><span class="tema">Segurança</span>
+            <h3>Segurança nos detalhes</h3>
+            <p class="na-pratica">Login, planilhas e anexos não viram porta de entrada.</p>
+            <p>Bloqueio de força bruta por usuário e IP, CSV protegido contra fórmulas maliciosas, uploads validados e comprimidos, e dados passados ao JavaScript sem interpolação insegura.</p></li>
+          <li><span class="tema">Infraestrutura</span>
+            <h3>Funciona sem internet</h3>
+            <p class="na-pratica">O sistema roda inteiro na rede interna.</p>
+            <p>Fontes, bibliotecas de front-end e a geração de PDF ficam no próprio servidor. O deploy roda em Docker, com Gunicorn e Nginx.</p></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section id="contato" class="fim escuro">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Quer saber mais sobre este projeto?</h2>
+        <p>Posso mostrar o sistema funcionando e explicar qualquer uma dessas decisões.</p>
+      </div>
+      <p class="email">rbrandaodev@gmail.com</p>
+      <div class="acoes">
+        <a class="btn btn-primario" href="mailto:rbrandaodev@gmail.com?subject=Sistema%20de%20gest%C3%A3o%20de%20T.I">Escrever sobre este projeto</a>
+        <button type="button" class="btn btn-secundario" data-copiar="rbrandaodev@gmail.com" aria-live="polite">Copiar endereço</button>
+      </div>
+      <a class="proximo" href="timer-estacoes.html">
+        <span class="janela"><span class="janela-barra">Painel central</span><img src="../assets/img/timer-estacoes/painel.png" srcset="../assets/img/timer-estacoes/painel-160.webp 160w, ../assets/img/timer-estacoes/painel-240.webp 240w, ../assets/img/timer-estacoes/painel-320.webp 320w, ../assets/img/timer-estacoes/painel-480.webp 480w, ../assets/img/timer-estacoes/painel-640.webp 640w, ../assets/img/timer-estacoes/painel-960.webp 960w, ../assets/img/timer-estacoes/painel-1280.webp 1280w, ../assets/img/timer-estacoes/painel-1920.webp 1920w, ../assets/img/timer-estacoes/painel.png 2400w" sizes="230px" alt="" width="2400" height="1500" loading="lazy"></span>
+        <span>Próximo projeto: <b>Timer de estações</b> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Rafael Brandão</span>
+    <a class="direita" href="../index.html">Início</a>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Tela ampliada">
+  <button type="button" class="fechar" aria-label="Fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <figure><figcaption></figcaption></figure>
+</dialog>
+
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## O que é
+
+`PRODUCT.md` registra para quem é o site, o posicionamento e o que não pode ser inventado; `DESIGN.md` registra o sistema visual. Leia os dois antes de mudar texto ou aparência, e atualize o `DESIGN.md` quando um componente mudar.
+
+Portfólio pessoal de Rafael Brandão: site estático em HTML, CSS e JavaScript puros, em pt-BR. Não há build, dependências, lint nem testes. Para ver o resultado, abra `index.html` no navegador. A única ferramenta é `ferramentas/capturar_telas.py`, que gera as capturas e não faz parte do site. A publicação prevista é em hospedagem estática (GitHub Pages, branch `main`, pasta `/`).
+
+## Restrições do projeto
+
+- **Sem dependências externas.** Nada de CDN, framework ou fonte remota: a Manrope fica em `assets/fontes/` (um arquivo variável, pesos de 200 a 800, só o subconjunto latino, com a licença em `OFL.txt` ao lado) e o site precisa funcionar offline, aberto direto do disco (`file://`). Por isso todos os caminhos são relativos (`assets/...` na raiz, `../assets/...` dentro de `projetos/`), nunca começando com `/`.
+- **Os três projetos são mostrados de forma anônima.** São internos de uma instituição: nenhum texto ou captura pode trazer nome, logo, setores, e-mails ou endereços de rede dela, e todos os dados das capturas são fictícios. No sistema de T.I só entra a área de conteúdo (sem barra do topo e menu lateral); no timer a logo é escondida e o endereço dos tablets é trocado; no sorteio o evento tem nome genérico, o cabeçalho fica de fora e os termos da app que revelariam o ramo são trocados na tela antes da captura (as "trocas" de `ferramentas/sorteio.local.json`, arquivo fora do git com os termos reais do formulário); no timer o endereço dos tablets vira `servidor.local`. Os textos não citam o ramo da instituição, e os dados fictícios usam UF e DDD misturados para não apontar uma região. Ao trocar ou adicionar uma captura, abra a imagem e confira de novo que nada identifica a instituição. O repositório inteiro é público: a regra vale também para o README, este arquivo e os roteiros em `ferramentas/` (inclusive nomes de pastas dos outros repositórios).
+- **As capturas vêm de `ferramentas/capturar_telas.py`** (Playwright), rodando contra cópias de demonstração dos projetos (repositórios vizinhos a este) em portas próprias: 8001, 3011 e 5011. Nunca aponte o roteiro para os servidores de uso (8000 e 3001): ele apaga cronômetros e cadastra participantes. Os comandos para subir cada cópia estão no README. Se uma captura mudar de tamanho, atualize `width` e `height` da `<img>` e as larguras do `srcset`. Cada captura tem versões `nome-320.webp` a `nome-1920.webp`, reduzidas com nitidez pelo roteiro (`--so-reduzir` refaz só elas). Toda `<img>` lista essas versões no `srcset` e declara no `sizes` a largura em que aparece; sem isso o navegador encolhe a captura inteira e o texto das telas borra. O `src` aponta sempre para a captura inteira, que é a que a tela ampliada abre.
+- **Exceção: `assets/img/sistema-ti/telas/`** guarda as 12 telas de "Mais telas" do sistema de T.I, capturadas à mão pelo autor (1x), na ordem e com os nomes que ele escolheu. Não vêm do roteiro, que não grava nessa pasta. Todas foram padronizadas em 1656×840, sem a linha de sombra do topo e com o Portal centralizado num quadro da cor do fundo das telas. Três foram editadas para o anonimato: em Usuários e Patrimônios, um setor real virou "Manutenção" (códigos MN-), e os e-mails passaram para `exemplo.com.br`; em Movimentações saiu uma observação de teste; em Fornecedores, os DDDs foram misturados. As versões menores saem de `reduzir()` do roteiro, chamada sobre essa pasta. Se o autor mandar capturas novas, abra cada uma e confira o anonimato antes de usar.
+- **Pendências de conteúdo** ficam marcadas com `class="a-definir"` (destaque amarelo visível na página). Procure por `a-definir` nos `.html` antes de publicar e não invente esses dados: pergunte ao autor.
+
+## Arquitetura
+
+Três camadas de estilo e um script compartilhado:
+
+- `assets/css/estilo.css` tem o que é comum a todas as páginas: `@font-face`, as variáveis de cor em `:root`, nav, `.topo`, botões, os aparelhos (`.janela`, `.tablet`, `.celular`), a composição `.capa`, rodapé e lightbox. Os valores de contraste anotados ao lado das cores foram calculados; mantenha as anotações corretas ao mudar uma cor.
+- `assets/css/estudo.css` é carregado só pelos estudos de caso (`projetos/*.html`), depois do `estilo.css`: `.ficha`, `.topo-tela`, `.objetivos` (o que o sistema precisava resolver, em itens), `.passos` (passo a passo em três colunas, com a tela embaixo de cada passo), `.par` (dois celulares lado a lado), `.decisoes-grade` (decisões em colunas, com tema, frase simples e detalhe; três à vista e as outras em `.mais-decisoes`, um `<details>` com `.decisoes-grade.duas`), `.etiquetas` (as tecnologias na `.ficha`), `.miniaturas` (grade de telas; `.quatro` para os tablets do timer), `.iguais` (em `.passos` ou `.miniaturas`: janelas da mesma proporção, com a tela inteira dentro), `.carrossel` (as miniaturas numa faixa lateral; hoje só em "Mais telas" do sistema de T.I), `.fim` e `.proximo` (o link para o próximo projeto).
+- O que é de uma página só fica num `<style>` no `<head>` dela (por exemplo `.projeto` e `.tecnologias` no `index.html`), não nos arquivos compartilhados.
+- `assets/js/site.js` é carregado por todas as páginas e depende de ids fixos no HTML: `#nav`, `#nav-toggle` e `#nav-links` são obrigatórios (o script quebra sem eles); `#lightbox` é opcional. Ele também cuida do menu do celular, dos efeitos de movimento (entrada ao rolar com `.revelar`; capa em camadas e inclinação nas `.projeto .capa` da página inicial; tudo desligado com movimento reduzido, veja "Motion" no `DESIGN.md`), do botão de copiar (`data-copiar`), das setas e pontos de cada `[data-carrossel]` (a faixa `.carrossel-trilho` dentro dele) e, na tela ampliada, cria a imagem e os botões de anterior e próximo. O destaque da seção atual no menu só considera links `href="#..."` e elementos `main section[id]`.
+
+Convenções que atravessam os arquivos:
+
+- Nomes de classes, ids, variáveis CSS e JavaScript em português.
+- Regiões de fundo navy levam a classe `escuro`, que ajusta a cor do foco (`:focus-visible`).
+- Toda tela aparece dentro de um aparelho: `.janela` (com `<span class="janela-barra">` e o nome da tela), `.tablet` ou `.celular`. Dentro dele vai a tela inteira, reduzida para caber, sem corte; é escolha do autor. Com `.iguais`, a janela tem proporção fixa e a tela entra inteira com `object-fit:contain`; isso só funciona porque a borda de toda captura tem a cor do fundo da janela (#F8FAFC). A exceção é o sorteio, que mostra recortes (`RECORTES` no roteiro de capturas): o cartão do vencedor e o começo do cadastro, cuja tela inteira é alta demais para um celular.
+- Tela ampliável: o aparelho é um `<button type="button" class="janela ampliavel" data-titulo="...">`; a ampliação abre a mesma imagem no tamanho real. Quando a imagem é um recorte, `data-ampliada` e `data-largura` apontam para a tela inteira, que é o que a ampliação abre. A tela ampliada mostra a imagem com metade da largura do arquivo, porque as capturas do roteiro são 2x; as capturas em 1x (as de `sistema-ti/telas/`) levam `data-densidade="1"`. A página precisa ter o `<dialog id="lightbox">` no fim do `<body>`; a `<img>` dele é criada pelo script.
+- Toda `<img>` tem `width` e `height` reais do arquivo e `alt` descritivo; as que ficam abaixo da primeira tela usam `loading="lazy"`.
+- Na página inicial os projetos ficam em `.projetos`, um `<a class="projeto">` por linha; a `.capa` (tela principal e uma peça sobreposta, diferente em cada projeto) alterna de lado por `:nth-child(even)`. Dentro do link, a capa usa `<span>` em vez de botões e as imagens têm `alt` vazio. O topo de cada estudo de caso repete a mesma capa, com botões ampliáveis.
+- Todo estudo de caso tem o mesmo menu (Projetos, Como funciona, Decisões, Telas, Contato; some só o item da seção que não existe, e os itens seguem a ordem das seções na página: no sistema de T.I, "Mais telas" vem antes das decisões, então Telas vem antes de Decisões), a seção final com `id="contato"` e um link "Próximo projeto" que forma um ciclo entre as páginas.
+- O e-mail aparece como texto selecionável (`.email`) seguido de dois botões; nos estudos de caso o `mailto:` leva o nome do projeto no assunto.
+- Ponto de quebra de layout em 880px no `estudo.css` e nos estilos de página, e 800px no `estilo.css` (nav, tipografia e tela ampliada).
+
+## Adicionar um projeto
+
+1. Copie um dos arquivos de `projetos/` com o nome do novo projeto e troque o conteúdo.
+2. Coloque as capturas em `assets/img/<nome-do-projeto>/`.
+3. Adicione um bloco `<a class="projeto">` dentro de `.projetos`, no `index.html`.
+4. Para capturas reproduzíveis, acrescente uma função do projeto em `ferramentas/capturar_telas.py` e registre-a em `PROJETOS`.

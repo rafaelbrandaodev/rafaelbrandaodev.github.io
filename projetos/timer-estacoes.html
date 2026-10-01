@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timer de estações — Rafael Brandão</title>
+<meta name="description" content="Estudo de caso: cronômetros sincronizados em tempo real para avaliações em várias salas, com Flask, Socket.IO e React.">
+<meta name="theme-color" content="#070F1C">
+<link rel="icon" href="../assets/icones/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/icones/icone-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/icones/icone-180.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Rafael Brandão">
+<meta property="og:title" content="Timer de estações — Rafael Brandão">
+<meta property="og:description" content="Estudo de caso: cronômetros sincronizados em tempo real para avaliações em várias salas, com Flask, Socket.IO e React.">
+<meta property="og:url" content="https://rbrafazin.github.io/portfolio/projetos/timer-estacoes.html">
+<meta property="og:image" content="https://rbrafazin.github.io/portfolio/assets/img/compartilhar/timer-estacoes.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Painel central do timer com as salas e um tablet mostrando os últimos 30 segundos">
+<meta name="twitter:card" content="summary_large_image">
+<!--
+  Projeto mostrado de forma anônima: sem nome ou logo da instituição.
+  Nas capturas a logo foi removida e o endereço de rede é um exemplo.
+-->
+<link rel="stylesheet" href="../assets/css/estilo.css">
+<link rel="stylesheet" href="../assets/css/estudo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="nav" id="nav">
+  <div class="container">
+    <a href="../index.html" class="marca">Rafael Brandão</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav-links" id="nav-links" aria-label="Seções">
+      <a href="../index.html#projetos">Projetos</a>
+      <a href="#fluxo">Como funciona</a>
+      <a href="#decisoes">Decisões</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <div class="topo escuro">
+    <div class="container">
+      <a class="voltar" href="../index.html#projetos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Todos os projetos</a>
+      <h1>Timer de estações</h1>
+      <p class="sub">Cronômetros sincronizados em tempo real para avaliações em rodízio, com controle centralizado e um cronômetro dedicado para cada sala.</p>
+      <dl class="ficha">
+        <div><dt>Tecnologias</dt><dd><ul class="etiquetas"><li>Python</li><li>Flask</li><li>Socket.IO</li><li>React</li></ul></dd></div>
+        <div><dt>Ano</dt><dd>2026</dd></div>
+      </dl>
+      <div class="topo-tela">
+        <div class="capa capa-timer">
+          <button type="button" class="janela capa-principal ampliavel" data-titulo="Painel central"><span class="janela-barra">Painel central</span><img src="../assets/img/timer-estacoes/painel.png" srcset="../assets/img/timer-estacoes/painel-160.webp 160w, ../assets/img/timer-estacoes/painel-240.webp 240w, ../assets/img/timer-estacoes/painel-320.webp 320w, ../assets/img/timer-estacoes/painel-480.webp 480w, ../assets/img/timer-estacoes/painel-640.webp 640w, ../assets/img/timer-estacoes/painel-960.webp 960w, ../assets/img/timer-estacoes/painel-1280.webp 1280w, ../assets/img/timer-estacoes/painel-1920.webp 1920w, ../assets/img/timer-estacoes/painel.png 2400w" sizes="(max-width:880px) 75vw, (max-width:1208px) 72vw, 734px" alt="Painel central com os cronômetros das salas 1, 2 e 3, cada um com o tempo, a fase e o tablet conectado" width="2400" height="1500"></button>
+          <button type="button" class="tablet capa-peca ampliavel" data-titulo="Tablet: últimos 30 segundos"><img src="../assets/img/timer-estacoes/tablet-aviso.png" srcset="../assets/img/timer-estacoes/tablet-aviso-160.webp 160w, ../assets/img/timer-estacoes/tablet-aviso-240.webp 240w, ../assets/img/timer-estacoes/tablet-aviso-320.webp 320w, ../assets/img/timer-estacoes/tablet-aviso-480.webp 480w, ../assets/img/timer-estacoes/tablet-aviso-640.webp 640w, ../assets/img/timer-estacoes/tablet-aviso-960.webp 960w, ../assets/img/timer-estacoes/tablet-aviso-1280.webp 1280w, ../assets/img/timer-estacoes/tablet-aviso-1920.webp 1920w, ../assets/img/timer-estacoes/tablet-aviso.png 2560w" sizes="(max-width:880px) 39vw, (max-width:1208px) 37vw, 383px" alt="Tablet de uma sala com a tela âmbar dos últimos 30 segundos" width="2560" height="1600"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="contexto">
+    <div class="container">
+      <div class="titulo-sec"><h2>O que o sistema precisava resolver</h2></div>
+      <div class="texto-longo">
+        <ul class="objetivos">
+          <li>Centralizar o controle de tempo de todas as salas em um único lugar.</li>
+          <li>Permitir que cada sala acompanhasse seu próprio tempo.</li>
+          <li>Garantir o funcionamento em rede local.</li>
+          <li>E manter o tempo mesmo quando algum tablet fosse desconectado.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fluxo">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>O que o participante vê</h2>
+        <p>A tela inteira muda de cor conforme a fase, para ser lida do outro lado da sala.</p>
+      </div>
+      <div class="miniaturas quatro">
+        <figure>
+          <button type="button" class="tablet ampliavel" data-titulo="Tablet: em andamento"><img src="../assets/img/timer-estacoes/tablet-andamento.png" srcset="../assets/img/timer-estacoes/tablet-andamento-160.webp 160w, ../assets/img/timer-estacoes/tablet-andamento-240.webp 240w, ../assets/img/timer-estacoes/tablet-andamento-320.webp 320w, ../assets/img/timer-estacoes/tablet-andamento-480.webp 480w, ../assets/img/timer-estacoes/tablet-andamento-640.webp 640w, ../assets/img/timer-estacoes/tablet-andamento-960.webp 960w, ../assets/img/timer-estacoes/tablet-andamento-1280.webp 1280w, ../assets/img/timer-estacoes/tablet-andamento-1920.webp 1920w, ../assets/img/timer-estacoes/tablet-andamento.png 2560w" sizes="(max-width:880px) 44vw, (max-width:1208px) 20vw, 235px" alt="Tela branca do tablet com o rótulo Em andamento e a contagem regressiva" width="2560" height="1600" loading="lazy"></button>
+          <figcaption><b>Em andamento</b> Contagem e faixa de progresso.</figcaption>
+        </figure>
+        <figure>
+          <button type="button" class="tablet capa-peca ampliavel" data-titulo="Tablet: últimos 30 segundos"><img src="../assets/img/timer-estacoes/tablet-aviso.png" srcset="../assets/img/timer-estacoes/tablet-aviso-160.webp 160w, ../assets/img/timer-estacoes/tablet-aviso-240.webp 240w, ../assets/img/timer-estacoes/tablet-aviso-320.webp 320w, ../assets/img/timer-estacoes/tablet-aviso-480.webp 480w, ../assets/img/timer-estacoes/tablet-aviso-640.webp 640w, ../assets/img/timer-estacoes/tablet-aviso-960.webp 960w, ../assets/img/timer-estacoes/tablet-aviso-1280.webp 1280w, ../assets/img/timer-estacoes/tablet-aviso-1920.webp 1920w, ../assets/img/timer-estacoes/tablet-aviso.png 2560w" sizes="(max-width:880px) 44vw, (max-width:1208px) 20vw, 235px" alt="Tablet de uma sala com a tela âmbar dos últimos 30 segundos" width="2560" height="1600"></button>
+          <figcaption><b>Últimos 30 segundos</b> Três bipes e tela âmbar.</figcaption>
+        </figure>
+        <figure>
+          <button type="button" class="tablet ampliavel" data-titulo="Tablet: pausado"><img src="../assets/img/timer-estacoes/tablet-pausado.png" srcset="../assets/img/timer-estacoes/tablet-pausado-160.webp 160w, ../assets/img/timer-estacoes/tablet-pausado-240.webp 240w, ../assets/img/timer-estacoes/tablet-pausado-320.webp 320w, ../assets/img/timer-estacoes/tablet-pausado-480.webp 480w, ../assets/img/timer-estacoes/tablet-pausado-640.webp 640w, ../assets/img/timer-estacoes/tablet-pausado-960.webp 960w, ../assets/img/timer-estacoes/tablet-pausado-1280.webp 1280w, ../assets/img/timer-estacoes/tablet-pausado-1920.webp 1920w, ../assets/img/timer-estacoes/tablet-pausado.png 2560w" sizes="(max-width:880px) 44vw, (max-width:1208px) 20vw, 235px" alt="Tela azul-escura do tablet com o rótulo Pausado e a contagem congelada" width="2560" height="1600" loading="lazy"></button>
+          <figcaption><b>Pausado</b> A contagem congela.</figcaption>
+        </figure>
+        <figure>
+          <button type="button" class="tablet ampliavel" data-titulo="Tablet: tempo esgotado"><img src="../assets/img/timer-estacoes/tablet-esgotado.png" srcset="../assets/img/timer-estacoes/tablet-esgotado-160.webp 160w, ../assets/img/timer-estacoes/tablet-esgotado-240.webp 240w, ../assets/img/timer-estacoes/tablet-esgotado-320.webp 320w, ../assets/img/timer-estacoes/tablet-esgotado-480.webp 480w, ../assets/img/timer-estacoes/tablet-esgotado-640.webp 640w, ../assets/img/timer-estacoes/tablet-esgotado-960.webp 960w, ../assets/img/timer-estacoes/tablet-esgotado-1280.webp 1280w, ../assets/img/timer-estacoes/tablet-esgotado-1920.webp 1920w, ../assets/img/timer-estacoes/tablet-esgotado.png 2560w" sizes="(max-width:880px) 44vw, (max-width:1208px) 20vw, 235px" alt="Tela vermelha do tablet com o rótulo Tempo esgotado" width="2560" height="1600" loading="lazy"></button>
+          <figcaption><b>Tempo esgotado</b> Tela vermelha e um sino.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="decisoes">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Decisões técnicas</h2>
+        <p>O que mantém todas as salas no mesmo segundo.</p>
+      </div>
+      <ul class="decisoes-grade">
+        <li><span class="tema">Sincronia</span>
+          <h3>O servidor é a única fonte da verdade</h3>
+          <p class="na-pratica">Fechar ou trocar um tablet não mexe no cronômetro.</p>
+          <p>Todo o tempo é contado no notebook; o painel e os tablets só exibem o estado que recebem.</p></li>
+        <li><span class="tema">Rede</span>
+          <h3>Reconexão sem intervenção</h3>
+          <p class="na-pratica">Se a rede cair, o tablet se corrige sozinho quando ela volta.</p>
+          <p>A cada conexão o tablet recebe o estado atual. Enquanto está sem rede, avisa que o tempo pode estar parado.</p></li>
+        <li><span class="tema">Compatibilidade</span>
+          <h3>Feito para os tablets que existiam</h3>
+          <p class="na-pratica">Roda nos tablets antigos, sem depender da internet.</p>
+          <p>O build gera uma versão compatível com Android 5 e Chrome 49. Nada vem de fora: sem CDN nem fontes externas, e os sons são sintetizados no navegador.</p></li>
+      </ul>
+      <details class="mais-decisoes">
+        <summary>Ver mais 4 decisões <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <ul class="decisoes-grade duas">
+          <li><span class="tema">Canais</span>
+            <h3>Cada tablet recebe só a sua sala</h3>
+            <p class="na-pratica">O painel vê todas as salas; cada tablet, só a sua.</p>
+            <p>O painel entra num canal do Socket.IO que recebe a lista completa, e cada tablet entra no canal da sua sala, com o próprio cronômetro e os eventos que disparam os sons.</p></li>
+          <li><span class="tema">Concorrência</span>
+            <h3>Uma thread de relógio, com travas em ordem fixa</h3>
+            <p class="na-pratica">Todas as salas andam no mesmo relógio, sem o servidor travar.</p>
+            <p>Uma única thread decrementa os cronômetros a cada segundo e se encerra quando nenhum está rodando. As mudanças de estado acontecem sob uma trava, e as duas travas são sempre adquiridas na mesma ordem, para não haver impasse.</p></li>
+          <li><span class="tema">Painel</span>
+            <h3>O painel avisa antes do problema</h3>
+            <p class="na-pratica">Uma sala rodando sem tablet fica em destaque.</p>
+            <p>Cada cartão mostra se o tablet da sala está conectado. As ações que o servidor recusaria, como excluir uma sala em andamento, nem aparecem.</p></li>
+          <li><span class="tema">Implantação</span>
+            <h3>Ligar o notebook é o bastante</h3>
+            <p class="na-pratica">No dia da avaliação, ninguém precisa abrir um terminal.</p>
+            <p>O servidor sobe sozinho no login do Windows, em janela oculta, e um atalho abre o painel. O notebook só precisa de Python: a interface já vai compilada no repositório.</p></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section id="contato" class="fim escuro">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Quer saber mais sobre este projeto?</h2>
+        <p>Posso mostrar o painel e os tablets funcionando e explicar qualquer uma dessas decisões.</p>
+      </div>
+      <p class="email">rbrandaodev@gmail.com</p>
+      <div class="acoes">
+        <a class="btn btn-primario" href="mailto:rbrandaodev@gmail.com?subject=Timer%20de%20esta%C3%A7%C3%B5es">Escrever sobre este projeto</a>
+        <button type="button" class="btn btn-secundario" data-copiar="rbrandaodev@gmail.com" aria-live="polite">Copiar endereço</button>
+      </div>
+      <a class="proximo" href="sorteio-evento.html">
+        <span class="janela"><span class="janela-barra">Painel de sorteio</span><img src="../assets/img/sorteio-evento/vencedor-cartao.png" srcset="../assets/img/sorteio-evento/vencedor-cartao-160.webp 160w, ../assets/img/sorteio-evento/vencedor-cartao-240.webp 240w, ../assets/img/sorteio-evento/vencedor-cartao-320.webp 320w, ../assets/img/sorteio-evento/vencedor-cartao-480.webp 480w, ../assets/img/sorteio-evento/vencedor-cartao-640.webp 640w, ../assets/img/sorteio-evento/vencedor-cartao-960.webp 960w, ../assets/img/sorteio-evento/vencedor-cartao.png 1000w" sizes="230px" alt="" width="1000" height="734" loading="lazy"></span>
+        <span>Próximo projeto: <b>Sorteio de evento</b> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Rafael Brandão</span>
+    <a class="direita" href="../index.html">Início</a>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Tela ampliada">
+  <button type="button" class="fechar" aria-label="Fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <figure><figcaption></figcaption></figure>
+</dialog>
+
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

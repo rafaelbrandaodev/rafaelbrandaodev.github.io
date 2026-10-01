@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sorteio de evento — Rafael Brandão</title>
+<meta name="description" content="Estudo de caso: cadastro por QR Code e sorteio ao vivo em eventos, com Flask e PostgreSQL.">
+<meta name="theme-color" content="#070F1C">
+<link rel="icon" href="../assets/icones/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/icones/icone-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/icones/icone-180.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Rafael Brandão">
+<meta property="og:title" content="Sorteio de evento — Rafael Brandão">
+<meta property="og:description" content="Estudo de caso: cadastro por QR Code e sorteio ao vivo em eventos, com Flask e PostgreSQL.">
+<meta property="og:url" content="https://rbrafazin.github.io/portfolio/projetos/sorteio-evento.html">
+<meta property="og:image" content="https://rbrafazin.github.io/portfolio/assets/img/compartilhar/sorteio-evento.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Janela do vencedor do sorteio e o formulário de cadastro aberto no celular">
+<meta name="twitter:card" content="summary_large_image">
+<!--
+  Projeto mostrado de forma anônima: sem nome ou logo da instituição.
+  Nas capturas o evento tem um nome genérico, o cabeçalho com a logo fica de fora
+  e os participantes são fictícios.
+-->
+<link rel="stylesheet" href="../assets/css/estilo.css">
+<link rel="stylesheet" href="../assets/css/estudo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="nav" id="nav">
+  <div class="container">
+    <a href="../index.html" class="marca">Rafael Brandão</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="nav-links" id="nav-links" aria-label="Seções">
+      <a href="../index.html#projetos">Projetos</a>
+      <a href="#fluxo">Como funciona</a>
+      <a href="#decisoes">Decisões</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <div class="topo escuro">
+    <div class="container">
+      <a class="voltar" href="../index.html#projetos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Todos os projetos</a>
+      <h1>Sorteio de evento</h1>
+      <p class="sub">Sistema de inscrições e sorteios para eventos presenciais, com cadastro via QR Code e sorteios ao vivo em um painel protegido.</p>
+      <dl class="ficha">
+        <div><dt>Tecnologias</dt><dd><ul class="etiquetas"><li>Python</li><li>Flask</li><li>PostgreSQL</li></ul></dd></div>
+        <div><dt>Ano</dt><dd>2026</dd></div>
+      </dl>
+      <div class="topo-tela">
+        <div class="capa capa-sorteio">
+          <button type="button" class="janela capa-principal ampliavel" data-titulo="Vencedor do sorteio"><span class="janela-barra">Painel de sorteio</span><img src="../assets/img/sorteio-evento/vencedor.png" srcset="../assets/img/sorteio-evento/vencedor-160.webp 160w, ../assets/img/sorteio-evento/vencedor-160.webp 160w, ../assets/img/sorteio-evento/vencedor-240.webp 240w, ../assets/img/sorteio-evento/vencedor-240.webp 240w, ../assets/img/sorteio-evento/vencedor-320.webp 320w, ../assets/img/sorteio-evento/vencedor-320.webp 320w, ../assets/img/sorteio-evento/vencedor-480.webp 480w, ../assets/img/sorteio-evento/vencedor-480.webp 480w, ../assets/img/sorteio-evento/vencedor-640.webp 640w, ../assets/img/sorteio-evento/vencedor-640.webp 640w, ../assets/img/sorteio-evento/vencedor-960.webp 960w, ../assets/img/sorteio-evento/vencedor-960.webp 960w, ../assets/img/sorteio-evento/vencedor.png 1160w" sizes="(max-width:880px) 68vw, (max-width:1208px) 64vw, 660px" alt="Janela do vencedor do sorteio com o nome, a categoria, o código e os dados de contato" width="1160" height="890"></button>
+          <button type="button" class="celular capa-peca ampliavel" data-titulo="Cadastro no celular" data-ampliada="../assets/img/sorteio-evento/cadastro.png" data-largura="824"><img src="../assets/img/sorteio-evento/cadastro-foco.png" srcset="../assets/img/sorteio-evento/cadastro-foco-160.webp 160w, ../assets/img/sorteio-evento/cadastro-foco-240.webp 240w, ../assets/img/sorteio-evento/cadastro-foco-320.webp 320w, ../assets/img/sorteio-evento/cadastro-foco-480.webp 480w, ../assets/img/sorteio-evento/cadastro-foco-640.webp 640w, ../assets/img/sorteio-evento/cadastro-foco.png 824w" sizes="(max-width:880px) 24vw, (max-width:1208px) 23vw, 232px" alt="Formulário de cadastro aberto no celular" width="824" height="1480"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="contexto">
+    <div class="container">
+      <div class="titulo-sec"><h2>O que o sistema precisava resolver</h2></div>
+      <div class="texto-longo">
+        <ul class="objetivos">
+          <li>Agilizar o cadastro dos participantes pelo celular, sem instalar nada.</li>
+          <li>Permitir que cada pessoa se inscrevesse apenas uma vez.</li>
+          <li>Garantir um sorteio justo e transparente para todos.</li>
+          <li>E impedir que um participante fosse sorteado mais de uma vez.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fluxo">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Do QR Code ao vencedor</h2>
+        <p>O caminho de um participante, em três telas.</p>
+      </div>
+      <div class="passos iguais">
+        <div>
+          <h3>O QR Code vai para o telão</h3>
+          <p>Gerado a partir do endereço do formulário.</p>
+          <button type="button" class="janela ampliavel" data-titulo="Página do QR Code"><span class="janela-barra">Página do QR Code</span><img src="../assets/img/sorteio-evento/qrcode.png" srcset="../assets/img/sorteio-evento/qrcode-160.webp 160w, ../assets/img/sorteio-evento/qrcode-240.webp 240w, ../assets/img/sorteio-evento/qrcode-320.webp 320w, ../assets/img/sorteio-evento/qrcode-480.webp 480w, ../assets/img/sorteio-evento/qrcode-640.webp 640w, ../assets/img/sorteio-evento/qrcode-960.webp 960w, ../assets/img/sorteio-evento/qrcode-1280.webp 1280w, ../assets/img/sorteio-evento/qrcode-1920.webp 1920w, ../assets/img/sorteio-evento/qrcode.png 2160w" sizes="(max-width:880px) 94vw, (max-width:1208px) 29vw, 347px" alt="Página com o QR Code do formulário, o endereço e o aviso de quando acontece o sorteio" width="2160" height="1732" loading="lazy"></button>
+        </div>
+        <div>
+          <h3>O participante se cadastra</h3>
+          <p>Tudo numa tela só; na confirmação, o código com que concorre.</p>
+          <div class="par">
+            <button type="button" class="celular ampliavel" data-titulo="Cadastro no celular" data-ampliada="../assets/img/sorteio-evento/cadastro.png" data-largura="824"><img src="../assets/img/sorteio-evento/cadastro-foco.png" srcset="../assets/img/sorteio-evento/cadastro-foco-160.webp 160w, ../assets/img/sorteio-evento/cadastro-foco-240.webp 240w, ../assets/img/sorteio-evento/cadastro-foco-320.webp 320w, ../assets/img/sorteio-evento/cadastro-foco-480.webp 480w, ../assets/img/sorteio-evento/cadastro-foco-640.webp 640w, ../assets/img/sorteio-evento/cadastro-foco.png 824w" sizes="(max-width:880px) 39vw, (max-width:1208px) 11vw, 144px" alt="Formulário de cadastro no celular, com categoria, nome, registro profissional, UF e CPF" width="824" height="1480" loading="lazy"></button>
+            <button type="button" class="celular ampliavel" data-titulo="Confirmação do cadastro"><img src="../assets/img/sorteio-evento/confirmacao.png" srcset="../assets/img/sorteio-evento/confirmacao-160.webp 160w, ../assets/img/sorteio-evento/confirmacao-240.webp 240w, ../assets/img/sorteio-evento/confirmacao-320.webp 320w, ../assets/img/sorteio-evento/confirmacao-480.webp 480w, ../assets/img/sorteio-evento/confirmacao-640.webp 640w, ../assets/img/sorteio-evento/confirmacao.png 824w" sizes="(max-width:880px) 39vw, (max-width:1208px) 11vw, 144px" alt="Confirmação do cadastro com o código de inscrição PRO-0022" width="824" height="1162" loading="lazy"></button>
+          </div>
+        </div>
+        <div>
+          <h3>A organização sorteia</h3>
+          <p>Um clique por categoria, e o vencedor aparece com os dados para contato.</p>
+          <button type="button" class="janela ampliavel" data-titulo="Painel de sorteio"><span class="janela-barra">Painel de sorteio</span><img src="../assets/img/sorteio-evento/painel.png" srcset="../assets/img/sorteio-evento/painel-160.webp 160w, ../assets/img/sorteio-evento/painel-240.webp 240w, ../assets/img/sorteio-evento/painel-320.webp 320w, ../assets/img/sorteio-evento/painel-480.webp 480w, ../assets/img/sorteio-evento/painel-640.webp 640w, ../assets/img/sorteio-evento/painel-960.webp 960w, ../assets/img/sorteio-evento/painel-1280.webp 1280w, ../assets/img/sorteio-evento/painel.png 1888w" sizes="(max-width:880px) 94vw, (max-width:1208px) 29vw, 347px" alt="Painel de sorteio com o total de inscritos, profissionais, estudantes e sorteados e os botões de sortear por categoria" width="1888" height="1180" loading="lazy"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="decisoes">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Decisões técnicas</h2>
+        <p>O que faz o sorteio ser justo e o cadastro, rápido.</p>
+      </div>
+      <ul class="decisoes-grade">
+        <li><span class="tema">Sorteio</span>
+          <h3>Ninguém é sorteado duas vezes</h3>
+          <p class="na-pratica">Dois cliques ao mesmo tempo nunca levam a mesma pessoa.</p>
+          <p>O banco escolhe ao acaso entre quem ainda não foi sorteado, com <code>FOR UPDATE SKIP LOCKED</code>.</p></li>
+        <li><span class="tema">Cadastro</span>
+          <h3>Uma inscrição por pessoa</h3>
+          <p class="na-pratica">A mesma pessoa não consegue se inscrever duas vezes.</p>
+          <p>O CPF é conferido pelos dígitos verificadores, no navegador e no servidor, e CPF e registro profissional são únicos no banco.</p></li>
+        <li><span class="tema">Privacidade</span>
+          <h3>Cuidado com os dados pessoais</h3>
+          <p class="na-pratica">Ninguém se inscreve sem consentir, e o painel é protegido.</p>
+          <p>O consentimento é obrigatório, o painel exige sessão com cookie só em HTTPS e todos os formulários têm proteção contra CSRF.</p></li>
+      </ul>
+      <details class="mais-decisoes">
+        <summary>Ver mais 4 decisões <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <ul class="decisoes-grade duas">
+          <li><span class="tema">Acesso</span>
+            <h3>Limite de tentativas só onde faz sentido</h3>
+            <p class="na-pratica">O login é protegido, e o formulário aguenta o evento inteiro no mesmo Wi-Fi.</p>
+            <p>O login do painel aceita dez tentativas a cada quinze minutos por IP. O formulário público não tem limite, de propósito: no evento, todos chegam pelo mesmo Wi-Fi e, portanto, pelo mesmo endereço.</p></li>
+          <li><span class="tema">Exportação</span>
+            <h3>Planilha que abre pronta</h3>
+            <p class="na-pratica">A lista de inscritos sai em Excel, pronta para usar.</p>
+            <p>Cabeçalho fixo, filtros por coluna e os sorteados em destaque. Texto que começa com <code>=</code> é gravado como texto, para nunca virar fórmula.</p></li>
+          <li><span class="tema">Configuração</span>
+            <h3>Um evento novo sem mexer no código</h3>
+            <p class="na-pratica">Para outro evento, basta trocar as variáveis de ambiente.</p>
+            <p>O nome do evento, as categorias e o aviso de quando acontece o sorteio vêm de variáveis de ambiente. Com uma categoria só, ela já vem selecionada no formulário.</p></li>
+          <li><span class="tema">Testes</span>
+            <h3>Testes que rodam em qualquer máquina</h3>
+            <p class="na-pratica">Dá para testar sem o banco de produção.</p>
+            <p>Os 28 testes usam SQLite em memória e variáveis fictícias, sem precisar do PostgreSQL de produção.</p></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section id="contato" class="fim escuro">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Quer saber mais sobre este projeto?</h2>
+        <p>Posso mostrar o cadastro e o sorteio funcionando e explicar qualquer uma dessas decisões.</p>
+      </div>
+      <p class="email">rbrandaodev@gmail.com</p>
+      <div class="acoes">
+        <a class="btn btn-primario" href="mailto:rbrandaodev@gmail.com?subject=Sorteio%20de%20evento">Escrever sobre este projeto</a>
+        <button type="button" class="btn btn-secundario" data-copiar="rbrandaodev@gmail.com" aria-live="polite">Copiar endereço</button>
+      </div>
+      <a class="proximo" href="sistema-gestao-ti.html">
+        <span class="janela"><span class="janela-barra">Chamados</span><img src="../assets/img/sistema-ti/chamados-fila.png" srcset="../assets/img/sistema-ti/chamados-fila-160.webp 160w, ../assets/img/sistema-ti/chamados-fila-240.webp 240w, ../assets/img/sistema-ti/chamados-fila-320.webp 320w, ../assets/img/sistema-ti/chamados-fila-480.webp 480w, ../assets/img/sistema-ti/chamados-fila-640.webp 640w, ../assets/img/sistema-ti/chamados-fila-960.webp 960w, ../assets/img/sistema-ti/chamados-fila-1280.webp 1280w, ../assets/img/sistema-ti/chamados-fila-1920.webp 1920w, ../assets/img/sistema-ti/chamados-fila.png 2560w" sizes="230px" alt="" width="2560" height="1280" loading="lazy"></span>
+        <span>Próximo projeto: <b>Sistema de gestão de T.I</b> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Rafael Brandão</span>
+    <a class="direita" href="../index.html">Início</a>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Tela ampliada">
+  <button type="button" class="fechar" aria-label="Fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <figure><figcaption></figcaption></figure>
+</dialog>
+
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

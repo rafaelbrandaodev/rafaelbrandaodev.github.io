@@ -1,0 +1,22 @@
+# arquivos temporários de verificação
+_*.png
+
+# sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Python (ferramentas)
+__pycache__/
+
+# crítica de design: cita detalhes que ajudam a identificar a instituição
+.impeccable/critique/
+
+# termos reais do formulário do sorteio: revelariam o ramo da instituição
+ferramentas/sorteio.local.json
+
+# estado local de ferramentas (não faz parte do site)
+.claude/settings.local.json
+.impeccable/hook.cache.json
+.impeccable/hook.pending.json
+.impeccable/config.local.json
