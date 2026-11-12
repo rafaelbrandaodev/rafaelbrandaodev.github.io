@@ -40,7 +40,6 @@
     <nav class="nav-links" id="nav-links" aria-label="Seções">
       <a href="../index.html#projetos">Projetos</a>
       <a href="#fluxo">Como funciona</a>
-      <a href="#decisoes">Decisões</a>
       <a href="#contato">Contato</a>
     </nav>
   </div>
@@ -111,55 +110,11 @@
     </div>
   </section>
 
-  <section id="decisoes">
-    <div class="container">
-      <div class="titulo-sec">
-        <h2>Decisões técnicas</h2>
-        <p>O que faz o sorteio ser justo e o cadastro, rápido.</p>
-      </div>
-      <ul class="decisoes-grade">
-        <li><span class="tema">Sorteio</span>
-          <h3>Ninguém é sorteado duas vezes</h3>
-          <p class="na-pratica">Dois cliques ao mesmo tempo nunca levam a mesma pessoa.</p>
-          <p>O banco escolhe ao acaso entre quem ainda não foi sorteado, com <code>FOR UPDATE SKIP LOCKED</code>.</p></li>
-        <li><span class="tema">Cadastro</span>
-          <h3>Uma inscrição por pessoa</h3>
-          <p class="na-pratica">A mesma pessoa não consegue se inscrever duas vezes.</p>
-          <p>O CPF é conferido pelos dígitos verificadores, no navegador e no servidor, e CPF e registro profissional são únicos no banco.</p></li>
-        <li><span class="tema">Privacidade</span>
-          <h3>Cuidado com os dados pessoais</h3>
-          <p class="na-pratica">Ninguém se inscreve sem consentir, e o painel é protegido.</p>
-          <p>O consentimento é obrigatório, o painel exige sessão com cookie só em HTTPS e todos os formulários têm proteção contra CSRF.</p></li>
-      </ul>
-      <details class="mais-decisoes">
-        <summary>Ver mais 4 decisões <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <ul class="decisoes-grade duas">
-          <li><span class="tema">Acesso</span>
-            <h3>Limite de tentativas só onde faz sentido</h3>
-            <p class="na-pratica">O login é protegido, e o formulário aguenta o evento inteiro no mesmo Wi-Fi.</p>
-            <p>O login do painel aceita dez tentativas a cada quinze minutos por IP. O formulário público não tem limite, de propósito: no evento, todos chegam pelo mesmo Wi-Fi e, portanto, pelo mesmo endereço.</p></li>
-          <li><span class="tema">Exportação</span>
-            <h3>Planilha que abre pronta</h3>
-            <p class="na-pratica">A lista de inscritos sai em Excel, pronta para usar.</p>
-            <p>Cabeçalho fixo, filtros por coluna e os sorteados em destaque. Texto que começa com <code>=</code> é gravado como texto, para nunca virar fórmula.</p></li>
-          <li><span class="tema">Configuração</span>
-            <h3>Um evento novo sem mexer no código</h3>
-            <p class="na-pratica">Para outro evento, basta trocar as variáveis de ambiente.</p>
-            <p>O nome do evento, as categorias e o aviso de quando acontece o sorteio vêm de variáveis de ambiente. Com uma categoria só, ela já vem selecionada no formulário.</p></li>
-          <li><span class="tema">Testes</span>
-            <h3>Testes que rodam em qualquer máquina</h3>
-            <p class="na-pratica">Dá para testar sem o banco de produção.</p>
-            <p>Os 28 testes usam SQLite em memória e variáveis fictícias, sem precisar do PostgreSQL de produção.</p></li>
-        </ul>
-      </details>
-    </div>
-  </section>
-
   <section id="contato" class="fim escuro">
     <div class="container">
       <div class="titulo-sec">
         <h2>Quer saber mais sobre este projeto?</h2>
-        <p>Posso mostrar o cadastro e o sorteio funcionando e explicar qualquer uma dessas decisões.</p>
+        <p>Posso mostrar o cadastro e o sorteio funcionando e explicar como foram construídos.</p>
       </div>
       <p class="email">rbrandaodev@gmail.com</p>
       <div class="acoes">

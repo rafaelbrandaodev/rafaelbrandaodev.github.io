@@ -9,11 +9,10 @@ index.html                     página inicial: apresentação, projetos, tecnol
 projetos/
   sistema-gestao-ti.html       estudo de caso do sistema de gestão de T.I
   timer-estacoes.html          estudo de caso do timer de estações
-  timer-tablet.html            tablet da demonstração do timer, aberto em outra aba (?sala=N)
   sorteio-evento.html          estudo de caso do sorteio de evento
 assets/
   css/estilo.css               estilos de todas as páginas (cores, tipografia, nav, rodapé, tela ampliada)
-  css/estudo.css               estilos dos estudos de caso (ficha, passo a passo, decisões, galeria)
+  css/estudo.css               estilos dos estudos de caso (ficha, passo a passo, galeria)
   css/demo-timer.css           painel e tablets da demonstração do timer
   js/site.js                   menu, destaque da seção atual, copiar e-mail e tela ampliada
   js/demo-timer.js             demonstração do timer: servidor, painel e tablets no navegador
@@ -36,7 +35,7 @@ Hoje não há nenhuma. As tags de prévia de link (`og:url` e `og:image`), no `<
 
 ## Adicionar um projeto
 
-1. Copie um dos arquivos de `projetos/` com o nome do novo projeto e troque o conteúdo. O menu é o mesmo em todos (Projetos, Como funciona, Decisões, Telas, Contato); tire só o item da seção que a página não tiver.
+1. Copie um dos arquivos de `projetos/` com o nome do novo projeto e troque o conteúdo. O menu é o mesmo em todos (Projetos, Como funciona, Telas, Contato); tire só o item da seção que a página não tiver.
 2. Coloque as capturas em `assets/img/<nome-do-projeto>/`, e gere as versões menores com `python ferramentas/capturar_telas.py --so-reduzir`. Cada tela entra num aparelho (janela, tablet ou celular).
 3. Adicione um bloco `<a class="projeto">` com a `.capa` do projeto dentro de `.projetos`, no `index.html`. A capa alterna de lado sozinha; componha-a diferente das outras.
 4. No fim de cada estudo de caso, o link "Próximo projeto" forma um ciclo: aponte o do último projeto para o novo, e o do novo para o primeiro. Troque também o assunto do e-mail (`?subject=`) pelo nome do projeto.

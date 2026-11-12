@@ -40,7 +40,6 @@
       <a href="../index.html#projetos">Projetos</a>
       <a href="#fluxo">Como funciona</a>
       <a href="#telas">Telas</a>
-      <a href="#decisoes">Decisões</a>
       <a href="#contato">Contato</a>
     </nav>
   </div>
@@ -169,55 +168,11 @@
     </div>
   </section>
 
-  <section id="decisoes">
-    <div class="container">
-      <div class="titulo-sec">
-        <h2>Decisões técnicas</h2>
-        <p>O que não aparece nas telas, mas faz o sistema ser confiável.</p>
-      </div>
-      <ul class="decisoes-grade">
-        <li><span class="tema">Acesso</span>
-          <h3>Permissão por módulo, não por cargo</h3>
-          <p class="na-pratica">Cada pessoa vê e edita só os módulos liberados para ela.</p>
-          <p>Uma única função decide o acesso, checada na URL e de novo em cada tela.</p></li>
-        <li><span class="tema">Estoque</span>
-          <h3>Estoque sem condição de corrida</h3>
-          <p class="na-pratica">Duas saídas ao mesmo tempo não deixam o saldo errado.</p>
-          <p>Entradas, saídas e estornos passam por uma camada de serviço com <code>select_for_update</code>. O estorno lança a operação inversa em vez de apagar, e há testes de concorrência.</p></li>
-        <li><span class="tema">Rastreio</span>
-          <h3>Histórico de cada alteração</h3>
-          <p class="na-pratica">Dá para ver quem mudou o quê, e quando.</p>
-          <p>Chamados, equipamentos, produtos e bens guardam, a cada edição, os campos alterados, a data e o autor.</p></li>
-      </ul>
-      <details class="mais-decisoes">
-        <summary>Ver mais 4 decisões <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <ul class="decisoes-grade duas">
-          <li><span class="tema">Setores</span>
-            <h3>Dois setores, um modelo só</h3>
-            <p class="na-pratica">Um setor acompanha os dois almoxarifados; o outro vê só o seu.</p>
-            <p>Os dois usam as mesmas tabelas, separadas por um campo de setor, e as mesmas views, parametrizadas. O isolamento é assimétrico de propósito.</p></li>
-          <li><span class="tema">Patrimônio</span>
-            <h3>Inventário e patrimônio sempre iguais</h3>
-            <p class="na-pratica">Cadastrar um equipamento de T.I já cria o bem no patrimônio.</p>
-            <p>Um signal cria ou atualiza o bem correspondente e traduz o status entre os dois modelos. O número de patrimônio fica travado depois de criado.</p></li>
-          <li><span class="tema">Segurança</span>
-            <h3>Segurança nos detalhes</h3>
-            <p class="na-pratica">Login, planilhas e anexos não viram porta de entrada.</p>
-            <p>Bloqueio de força bruta por usuário e IP, CSV protegido contra fórmulas maliciosas, uploads validados e comprimidos, e dados passados ao JavaScript sem interpolação insegura.</p></li>
-          <li><span class="tema">Infraestrutura</span>
-            <h3>Funciona sem internet</h3>
-            <p class="na-pratica">O sistema roda inteiro na rede interna.</p>
-            <p>Fontes, bibliotecas de front-end e a geração de PDF ficam no próprio servidor. O deploy roda em Docker, com Gunicorn e Nginx.</p></li>
-        </ul>
-      </details>
-    </div>
-  </section>
-
   <section id="contato" class="fim escuro">
     <div class="container">
       <div class="titulo-sec">
         <h2>Quer saber mais sobre este projeto?</h2>
-        <p>Posso mostrar o sistema funcionando e explicar qualquer uma dessas decisões.</p>
+        <p>Posso mostrar o sistema funcionando e explicar como ele foi construído.</p>
       </div>
       <p class="email">rbrandaodev@gmail.com</p>
       <div class="acoes">

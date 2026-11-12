@@ -1,6 +1,5 @@
 /* Demonstração do timer de estações: o painel e os tablets que rodam no navegador.
-   Carregado pelo estudo de caso do timer (depois do estudo.css) e pela página do tablet em outra aba
-   (timer-tablet.html). As cores de fase são as do sistema; as razões de contraste estão anotadas. */
+   Carregado pelo estudo de caso do timer, depois do estudo.css. As cores de fase são as do sistema; as razões de contraste estão anotadas. */
 
 :root{
   --dt-andamento:#4F7029;   /* verde escurecido: 5,7:1 sobre branco */
@@ -77,7 +76,7 @@
   .demo-tablets{grid-template-columns:1fr;max-width:440px}
 }
 
-/* ---------- tela do tablet (na página e na aba própria) ---------- */
+/* ---------- tela do tablet ---------- */
 /* o tamanho do texto acompanha a largura da tela (cqw), como num tablet de verdade */
 .dt-tela{
   --campo:#E2E8F0;--tinta-t:#0F172A;--rotulo:#334155;--barra:#64748B;--trilho:rgba(15,23,42,.12);
@@ -105,14 +104,6 @@
 .dt-tela-barra div{height:100%;background:var(--barra);transform-origin:left;transition:transform .9s linear}
 @keyframes dt-pulso{50%{opacity:.55}}
 .dt-tela.last10 .dt-tela-tempo,.dt-tela.finished .dt-tela-tempo{animation:dt-pulso 1s ease-in-out infinite}
-
-/* aba própria: a tela ocupa o aparelho inteiro */
-.dt-pagina{margin:0;background:#0F172A}
-.dt-pagina .dt-tela{aspect-ratio:auto;height:100vh;height:100svh;border-radius:0;container-type:size}
-.dt-pagina .dt-tela-tempo{font-size:min(22cqw,42cqh)}
-.dt-ativar{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:0 0 6cqh;border:0;background:rgba(15,23,42,.35);cursor:pointer}
-.dt-ativar span{display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border-radius:999px;background:#fff;color:#0F172A;font-size:18px;font-weight:700;box-shadow:0 8px 24px rgba(15,23,42,.3)}
-.dt-ativar svg{width:22px;height:22px}
 
 @media (prefers-reduced-motion:reduce){
   .dt-tela,.dt-tela-barra div,.dt-progresso div{transition:none}

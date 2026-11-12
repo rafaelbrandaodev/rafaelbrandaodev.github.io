@@ -1,17 +1,14 @@
 /* Demonstração do timer de estações.
    Reproduz no navegador, sem servidor, a lógica do sistema: o "servidor" (aqui, a página do estudo de caso)
    é a única fonte da verdade e conta o tempo; o painel só manda comandos e cada tablet só mostra o estado
-   da própria sala. Os tablets da página recebem o estado direto. Um tablet aberto em outra aba
-   (timer-tablet.html?sala=N) conversa com o servidor por BroadcastChannel, no papel do Socket.IO.
+   da própria sala, que recebe do servidor como receberia pelo canal da sala no Socket.IO.
    As regras de cada comando seguem as do servidor do sistema: limites de duração, aviso dos 30 segundos,
    o que vale em cada fase. Script clássico (sem módulo) para funcionar aberto direto do disco. */
 (function () {
   'use strict';
 
-  var CANAL = 'timer-estacoes-demo';
   var SEM_SINAL_MS = 2500;    // o servidor manda o estado a cada segundo: nada nesse intervalo, a conexão caiu
   var PARADO_MS = 3000;       // como no sistema: quedas curtas não alarmam a sala
-  var TABLET_SOME_MS = 3500;  // tablet de outra aba que parou de dar sinal sai da contagem do painel
   var ROTULO_PAINEL = { idle: 'Aguardando', running: 'Em andamento', paused: 'Pausado', finished: 'Tempo esgotado' };
   var ROTULO_TABLET = {
     idle: 'Aguardando início', running: 'Em andamento', warning: 'Últimos 30 segundos',
@@ -31,9 +28,6 @@
     return e;
   }
   function copiar(t) { return { id: t.id, duration: t.duration, timeLeft: t.timeLeft, phase: t.phase }; }
-  function abrirCanal() {
-    try { return 'BroadcastChannel' in window ? new BroadcastChannel(CANAL) : null; } catch (e) { return null; }
-  }
 
   /* ---------- sons: os mesmos do sistema, sintetizados (sem arquivo de áudio) ---------- */
   var som = (function () {
@@ -91,60 +85,34 @@
   /* ---------- servidor: conta o tempo e distribui o estado ---------- */
   function Servidor() {
     var self = this;
-    this.id = Math.random().toString(36).slice(2, 10);
     this.salas = {};
     [[1, 60], [2, 120], [3, 300]].forEach(function (p) {
       // escolhida: a duração da lista; o +30 s aumenta só a rodada atual (duration)
       self.salas[p[0]] = { id: p[0], duration: p[1], escolhida: p[1], timeLeft: 0, phase: 'idle', warned30s: false };
     });
-    this.locais = [];   // tablets desta página
-    this.remotos = {};  // tablets de outras abas: id -> { sala, visto }
+    this.tablets = [];
     this.aoMudar = function () {};
     this.ultimo = Date.now();
-    this.canal = abrirCanal();
-    if (this.canal) this.canal.onmessage = function (e) { self.receber(e.data || {}); };
     // o relógio confere a hora real: numa aba em segundo plano o navegador atrasa os timers,
     // e a contagem recupera os segundos perdidos em vez de atrasar
     setInterval(function () { self.tique(); }, 250);
-    window.addEventListener('pagehide', function () { self.postar({ tipo: 'servidorSaiu' }); });
   }
-  Servidor.prototype.postar = function (msg) {
-    if (!this.canal) return;
-    msg.servidor = this.id;
-    try { this.canal.postMessage(msg); } catch (e) { /* aba fechando */ }
-  };
   // cada tablet só recebe a própria sala, como os canais do Socket.IO no sistema
   Servidor.prototype.enviar = function (sala, msg) {
     msg.sala = sala;
-    this.locais.forEach(function (t) { if (t.sala === sala && t.online) t.receber(msg); });
-    this.postar(msg);
+    this.tablets.forEach(function (t) { if (t.sala === sala && t.online) t.receber(msg); });
   };
   Servidor.prototype.estado = function (sala) {
-    if (this.salas[sala]) this.enviar(sala, { tipo: 'estado', timer: copiar(this.salas[sala]) });
-    else this.enviar(sala, { tipo: 'naoEncontrada' });
-  };
-  Servidor.prototype.receber = function (m) {
-    var sala = Number(m.sala);
-    if (m.tipo === 'entrar' || m.tipo === 'presente') {
-      if (m.servidor && m.servidor !== this.id) return;  // tablet que segue outra aba do estudo de caso
-      var novo = !this.remotos[m.id];
-      this.remotos[m.id] = { sala: sala, visto: Date.now() };
-      if (m.tipo === 'entrar') this.estado(sala);  // a cada conexão, o tablet recebe o estado atual
-      if (novo) this.aoMudar();
-    } else if (m.tipo === 'sair' && this.remotos[m.id]) {
-      delete this.remotos[m.id];
-      this.aoMudar();
-    }
+    this.enviar(sala, { tipo: 'estado', timer: copiar(this.salas[sala]) });
   };
   Servidor.prototype.conectar = function (tablet) {
-    if (this.locais.indexOf(tablet) < 0) this.locais.push(tablet);
-    if (tablet.online) this.estado(tablet.sala);
+    if (this.tablets.indexOf(tablet) < 0) this.tablets.push(tablet);
+    if (tablet.online) this.estado(tablet.sala);  // a cada conexão, o tablet recebe o estado atual
     this.aoMudar();
   };
   Servidor.prototype.contarTablets = function (sala) {
-    var n = 0, k;
-    this.locais.forEach(function (t) { if (t.sala === sala && t.online) n++; });
-    for (k in this.remotos) if (this.remotos[k].sala === sala) n++;
+    var n = 0;
+    this.tablets.forEach(function (t) { if (t.sala === sala && t.online) n++; });
     return n;
   };
   Servidor.prototype.avisarSeFor = function (t) {
@@ -174,7 +142,6 @@
     }
     // todo segundo cada sala recebe o estado: além da contagem, é o sinal de que o servidor está lá
     Object.keys(this.salas).forEach(function (k) { self.estado(Number(k)); });
-    for (var id in this.remotos) if (agora - this.remotos[id].visto > TABLET_SOME_MS) delete this.remotos[id];
     this.aoMudar();
   };
   Servidor.prototype.comando = function (nome, sala, valor) {
@@ -213,35 +180,20 @@
   };
 
   /* ---------- tablet: só exibe o que recebe ---------- */
-  function Tablet(tela, sala, opcoes) {
+  function Tablet(tela, sala) {
     var self = this;
-    opcoes = opcoes || {};
     this.tela = tela;
     this.sala = sala;
-    this.remoto = !!opcoes.canal || opcoes.remoto;
-    this.canal = opcoes.canal || null;
     this.online = true;
     this.timer = null;
-    this.naoEncontrada = false;
     this.conectado = false;
     this.desde = Date.now();
     this.ultimaMsg = 0;
-    this.servidor = null;
     this.fase = null;
-    this.id = Math.random().toString(36).slice(2, 10);
     this.montar();
     setInterval(function () { self.verificar(); }, 250);
     this.verificar();
-    if (this.canal) {
-      this.canal.onmessage = function (e) { self.receber(e.data || {}); };
-      this.avisarServidor('entrar');
-      setInterval(function () { self.avisarServidor(self.conectado ? 'presente' : 'entrar'); }, 1000);
-      window.addEventListener('pagehide', function () { self.avisarServidor('sair'); });
-    }
   }
-  Tablet.prototype.avisarServidor = function (tipo) {
-    try { this.canal.postMessage({ tipo: tipo, sala: this.sala, id: this.id, servidor: this.servidor }); } catch (e) { /* aba fechando */ }
-  };
   Tablet.prototype.montar = function () {
     var t = this.tela;
     t.textContent = '';
@@ -269,21 +221,9 @@
     [this.cabeca, this.corpo, this.aviso, this.barra].forEach(function (e) { t.appendChild(e); });
   };
   Tablet.prototype.receber = function (m) {
-    if (m.tipo === 'servidorSaiu') {
-      // a aba do servidor fechou: a conexão cai na hora, como um socket desconectado
-      if (m.servidor === this.servidor) { this.ultimaMsg = 0; this.servidor = null; this.verificar(); }
-      return;
-    }
-    if (Number(m.sala) !== this.sala || !m.tipo || m.tipo === 'entrar' || m.tipo === 'presente' || m.tipo === 'sair') return;
-    if (this.remoto) {
-      // com duas abas do estudo de caso abertas, o tablet segue uma só, até ela parar de responder
-      var livre = !this.servidor || Date.now() - this.ultimaMsg > SEM_SINAL_MS;
-      if (!livre && m.servidor !== this.servidor) return;
-      this.servidor = m.servidor;
-    }
+    if (m.sala !== this.sala) return;
     this.ultimaMsg = Date.now();
-    if (m.tipo === 'estado') { this.naoEncontrada = false; this.timer = m.timer; }
-    else if (m.tipo === 'naoEncontrada') { this.naoEncontrada = true; this.timer = null; }
+    if (m.tipo === 'estado') this.timer = m.timer;
     else if (m.tipo === 'aviso') som.aviso();
     else if (m.tipo === 'fim') som.fim();
     this.verificar();
@@ -305,20 +245,11 @@
     this.avisoTexto.hidden = !texto;
   };
   Tablet.prototype.desenhar = function (parado) {
-    if (this.naoEncontrada) {
-      this.mensagem('Sala ' + this.sala + ' não encontrada',
-        'Esta demonstração tem as salas 1, 2 e 3. Confira o número no fim do endereço (…?sala=1).');
-      return;
-    }
     if (!this.timer) {
       if (!parado) {
         this.mensagem('', '');
         this.avisoTitulo.textContent = 'Conectando ao servidor...';
         this.avisoTitulo.className = 'dt-tela-espera';
-      } else if (this.remoto && !this.canal) {
-        this.mensagem('Sem conexão com o servidor', 'Este navegador não deixa as abas conversarem entre si. Use os tablets da página do estudo de caso.');
-      } else if (this.remoto) {
-        this.mensagem('Sem conexão com o servidor', 'Este tablet recebe o tempo da página do estudo de caso, que faz o papel do servidor. Deixe aquela página aberta neste navegador: esta tela atualiza sozinha quando a conexão voltar.');
       } else {
         this.mensagem('Sem conexão com o servidor', 'Religue o Wi-Fi do tablet: esta tela atualiza sozinha quando a conexão voltar.');
       }
@@ -489,13 +420,7 @@
       var wifi = criar('button', 'dt-btn', 'Desligar Wi-Fi');
       wifi.type = 'button';
       wifi.setAttribute('aria-label', 'Desligar o Wi-Fi do tablet da sala ' + sala);
-      var aba = criar('a', 'dt-btn', 'Abrir em outra aba');
-      aba.href = 'timer-tablet.html?sala=' + sala;
-      aba.target = '_blank';
-      aba.rel = 'noopener';
-      aba.setAttribute('aria-label', 'Abrir o tablet da sala ' + sala + ' em outra aba');
       legenda.appendChild(wifi);
-      legenda.appendChild(aba);
       fig.appendChild(aparelho);
       fig.appendChild(legenda);
       tablets.appendChild(fig);
@@ -523,25 +448,6 @@
     servidor.aoMudar();
   }
 
-  function iniciarTabletAvulso(tela) {
-    var n = Number(new URLSearchParams(location.search).get('sala') || 1);
-    var sala = n > 0 && Math.floor(n) === n ? n : 1;
-    document.title = 'Tablet da sala ' + sala + ' — Timer de estações (demonstração)';
-    var canal = abrirCanal();
-    new Tablet(tela, sala, { canal: canal, remoto: true });
-    var ativar = document.querySelector('.dt-ativar');
-    if (ativar) {
-      ativar.addEventListener('click', function () {
-        som.ligar();
-        var el = document.documentElement;
-        if (el.requestFullscreen) el.requestFullscreen().catch(function () {});
-        ativar.remove();
-      });
-    }
-  }
-
   var raiz = document.querySelector('[data-demo-timer]');
   if (raiz) iniciarDemo(raiz);
-  var avulso = document.querySelector('[data-tablet-avulso]');
-  if (avulso) iniciarTabletAvulso(avulso);
 })();

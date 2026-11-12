@@ -89,7 +89,7 @@ if (!menosMovimento && 'IntersectionObserver' in window) {
     });
   }, { rootMargin: '0px 0px -40px 0px' });
   var vistos = [];
-  document.querySelectorAll('main .titulo-sec, .projeto, .passos > div, .objetivos, .decisoes-grade > li, .carrossel, .miniaturas.quatro > figure, .tecnologias > div, .fim .email, .fim .acoes, .proximo').forEach(function (el) {
+  document.querySelectorAll('main .titulo-sec, .projeto, .passos > div, .objetivos, .carrossel, .miniaturas.quatro > figure, .tecnologias > div, .fim .email, .fim .acoes, .proximo').forEach(function (el) {
     if (el.getBoundingClientRect().top < window.innerHeight) return;
     var ordem = vistos.filter(function (v) { return v.parentNode === el.parentNode; }).length;
     vistos.push(el);

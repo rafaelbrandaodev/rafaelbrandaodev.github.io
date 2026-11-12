@@ -39,9 +39,8 @@
     </button>
     <nav class="nav-links" id="nav-links" aria-label="Seções">
       <a href="../index.html#projetos">Projetos</a>
-      <a href="#fluxo">Como funciona</a>
       <a href="#demo">Teste</a>
-      <a href="#decisoes">Decisões</a>
+      <a href="#fluxo">Como funciona</a>
       <a href="#contato">Contato</a>
     </nav>
   </div>
@@ -83,6 +82,24 @@
     </div>
   </section>
 
+  <section id="demo" class="escuro">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Teste aqui</h2>
+        <p>Uma versão do sistema que roda nesta página, com as mesmas regras: o painel manda os comandos, esta página conta o tempo no papel do servidor e cada tablet só mostra o que recebe. Inicie uma sala e desligue o Wi-Fi de um tablet para ver o que acontece.</p>
+      </div>
+      <div class="demo-timer" data-demo-timer>
+        <div class="janela demo-painel"><span class="janela-barra">Painel central</span><div class="demo-cartoes"></div></div>
+        <div class="demo-tablets"></div>
+        <div class="demo-barra">
+          <button type="button" class="dt-btn" data-som>Ativar o som dos tablets</button>
+          <p>Os sons são os do sistema: três bipes nos últimos 30 segundos e um sino no fim. Para ver o aviso logo, escolha 30 s ou 1 min.</p>
+        </div>
+      </div>
+      <noscript><p>A demonstração precisa de JavaScript.</p></noscript>
+    </div>
+  </section>
+
   <section id="fluxo">
     <div class="container">
       <div class="titulo-sec">
@@ -110,73 +127,11 @@
     </div>
   </section>
 
-  <section id="demo" class="escuro">
-    <div class="container">
-      <div class="titulo-sec">
-        <h2>Teste aqui</h2>
-        <p>Uma versão do sistema que roda nesta página, com as mesmas regras: o painel manda os comandos, esta página conta o tempo no papel do servidor e cada tablet só mostra o que recebe. Desligue o Wi-Fi de um tablet, ou abra um deles em outra aba e deixe as duas lado a lado.</p>
-      </div>
-      <div class="demo-timer" data-demo-timer>
-        <div class="janela demo-painel"><span class="janela-barra">Painel central</span><div class="demo-cartoes"></div></div>
-        <div class="demo-tablets"></div>
-        <div class="demo-barra">
-          <button type="button" class="dt-btn" data-som>Ativar o som dos tablets</button>
-          <p>Os sons são os do sistema: três bipes nos últimos 30 segundos e um sino no fim. Para ver o aviso logo, escolha 30 s ou 1 min.</p>
-        </div>
-      </div>
-      <noscript><p>A demonstração precisa de JavaScript.</p></noscript>
-    </div>
-  </section>
-
-  <section id="decisoes">
-    <div class="container">
-      <div class="titulo-sec">
-        <h2>Decisões técnicas</h2>
-        <p>O que mantém todas as salas no mesmo segundo.</p>
-      </div>
-      <ul class="decisoes-grade">
-        <li><span class="tema">Sincronia</span>
-          <h3>O servidor é a única fonte da verdade</h3>
-          <p class="na-pratica">Fechar ou trocar um tablet não mexe no cronômetro.</p>
-          <p>Todo o tempo é contado no notebook; o painel e os tablets só exibem o estado que recebem.</p></li>
-        <li><span class="tema">Rede</span>
-          <h3>Reconexão sem intervenção</h3>
-          <p class="na-pratica">Se a rede cair, o tablet se corrige sozinho quando ela volta.</p>
-          <p>A cada conexão o tablet recebe o estado atual. Enquanto está sem rede, avisa que o tempo pode estar parado.</p></li>
-        <li><span class="tema">Compatibilidade</span>
-          <h3>Feito para os tablets que existiam</h3>
-          <p class="na-pratica">Roda nos tablets antigos, sem depender da internet.</p>
-          <p>O build gera uma versão compatível com Android 5 e Chrome 49. Nada vem de fora: sem CDN nem fontes externas, e os sons são sintetizados no navegador.</p></li>
-      </ul>
-      <details class="mais-decisoes">
-        <summary>Ver mais 4 decisões <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <ul class="decisoes-grade duas">
-          <li><span class="tema">Canais</span>
-            <h3>Cada tablet recebe só a sua sala</h3>
-            <p class="na-pratica">O painel vê todas as salas; cada tablet, só a sua.</p>
-            <p>O painel entra num canal do Socket.IO que recebe a lista completa, e cada tablet entra no canal da sua sala, com o próprio cronômetro e os eventos que disparam os sons.</p></li>
-          <li><span class="tema">Concorrência</span>
-            <h3>Uma thread de relógio, com travas em ordem fixa</h3>
-            <p class="na-pratica">Todas as salas andam no mesmo relógio, sem o servidor travar.</p>
-            <p>Uma única thread decrementa os cronômetros a cada segundo e se encerra quando nenhum está rodando. As mudanças de estado acontecem sob uma trava, e as duas travas são sempre adquiridas na mesma ordem, para não haver impasse.</p></li>
-          <li><span class="tema">Painel</span>
-            <h3>O painel avisa antes do problema</h3>
-            <p class="na-pratica">Uma sala rodando sem tablet fica em destaque.</p>
-            <p>Cada cartão mostra se o tablet da sala está conectado. As ações que o servidor recusaria, como excluir uma sala em andamento, nem aparecem.</p></li>
-          <li><span class="tema">Implantação</span>
-            <h3>Ligar o notebook é o bastante</h3>
-            <p class="na-pratica">No dia da avaliação, ninguém precisa abrir um terminal.</p>
-            <p>O servidor sobe sozinho no login do Windows, em janela oculta, e um atalho abre o painel. O notebook só precisa de Python: a interface já vai compilada no repositório.</p></li>
-        </ul>
-      </details>
-    </div>
-  </section>
-
   <section id="contato" class="fim escuro">
     <div class="container">
       <div class="titulo-sec">
         <h2>Quer saber mais sobre este projeto?</h2>
-        <p>Posso mostrar o painel e os tablets funcionando e explicar qualquer uma dessas decisões.</p>
+        <p>Posso mostrar o painel e os tablets funcionando e explicar como foram construídos.</p>
       </div>
       <p class="email">rbrandaodev@gmail.com</p>
       <div class="acoes">
