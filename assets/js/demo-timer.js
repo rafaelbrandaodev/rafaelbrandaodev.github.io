@@ -94,7 +94,8 @@
     this.id = Math.random().toString(36).slice(2, 10);
     this.salas = {};
     [[1, 60], [2, 120], [3, 300]].forEach(function (p) {
-      self.salas[p[0]] = { id: p[0], duration: p[1], timeLeft: 0, phase: 'idle', warned30s: false };
+      // escolhida: a duração da lista; o +30 s aumenta só a rodada atual (duration)
+      self.salas[p[0]] = { id: p[0], duration: p[1], escolhida: p[1], timeLeft: 0, phase: 'idle', warned30s: false };
     });
     this.locais = [];   // tablets desta página
     this.remotos = {};  // tablets de outras abas: id -> { sala, visto }
@@ -181,7 +182,7 @@
     if (!t) return;
     if (nome === 'iniciar') {
       if (t.phase === 'running') return;
-      if (t.phase === 'idle' || t.phase === 'finished') { t.timeLeft = t.duration; t.warned30s = false; }
+      if (t.phase === 'idle' || t.phase === 'finished') { t.duration = t.escolhida; t.timeLeft = t.duration; t.warned30s = false; }
       t.phase = 'running';
       this.avisarSeFor(t);
     } else if (nome === 'pausar') {
@@ -192,7 +193,8 @@
       t.phase = 'running';
       this.avisarSeFor(t);
     } else if (nome === 'reiniciar') {
-      t.phase = 'idle'; t.timeLeft = 0; t.warned30s = false;
+      // diferente do sistema, que mantém a duração aumentada: na demonstração, reiniciar volta ao valor da lista
+      t.phase = 'idle'; t.timeLeft = 0; t.warned30s = false; t.duration = t.escolhida;
     } else if (nome === 'mais') {
       if (t.phase === 'idle' || t.phase === 'finished') return;
       t.timeLeft += Math.min(Math.max(valor, 5), 3600);
@@ -203,7 +205,7 @@
       var d = Math.min(Math.max(valor, 10), 3600);
       if (t.phase === 'idle') t.timeLeft = 0;
       else { t.timeLeft = d; t.warned30s = false; }
-      t.duration = d;
+      t.duration = t.escolhida = d;
       this.avisarSeFor(t);
     }
     this.estado(sala);
@@ -451,14 +453,7 @@
     this.mais.hidden = !ativo;
     this.duracao.hidden = !(f === 'idle' || f === 'paused');
     this.reiniciar.hidden = f === 'idle';
-    if (document.activeElement !== this.duracao) {
-      if (DURACOES.indexOf(t.duration) < 0 && !this.duracao.querySelector('[value="' + t.duration + '"]')) {
-        var o = criar('option', null, formatarDuracao(t.duration));
-        o.value = t.duration;
-        this.duracao.appendChild(o);
-      }
-      this.duracao.value = String(t.duration);
-    }
+    if (document.activeElement !== this.duracao) this.duracao.value = String(t.escolhida);
     if (this.confirmando) {
       this.confirmarTexto.textContent = 'Reiniciar a sala ' + this.sala + '? A contagem atual (' + formatar(t.timeLeft) +
         ') será perdida e o cronômetro volta para ' + formatar(t.duration) + ', aguardando início.';
