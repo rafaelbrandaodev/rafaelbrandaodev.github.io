@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablet — Timer de estações (demonstração)</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0F172A">
+<link rel="icon" href="../assets/icones/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/icones/icone-32.png" type="image/png" sizes="32x32">
+<!--
+  Tablet da demonstração do timer, aberto a partir do estudo de caso (timer-estacoes.html).
+  Recebe o tempo daquela página por BroadcastChannel; o número da sala vem de ?sala=N.
+-->
+<link rel="stylesheet" href="../assets/css/estilo.css">
+<link rel="stylesheet" href="../assets/css/demo-timer.css">
+</head>
+<body class="dt-pagina">
+<main class="dt-tela" data-tablet-avulso>
+  <noscript><p class="dt-tela-texto" style="padding:24px">O tablet da demonstração precisa de JavaScript.</p></noscript>
+</main>
+<button type="button" class="dt-ativar">
+  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+  Toque na tela para ativar o som</span>
+</button>
+<script src="../assets/js/demo-timer.js"></script>
+</body>
+</html>

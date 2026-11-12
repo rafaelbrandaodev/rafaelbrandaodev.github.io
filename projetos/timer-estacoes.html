@@ -26,6 +26,7 @@
 -->
 <link rel="stylesheet" href="../assets/css/estilo.css">
 <link rel="stylesheet" href="../assets/css/estudo.css">
+<link rel="stylesheet" href="../assets/css/demo-timer.css">
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -39,6 +40,7 @@
     <nav class="nav-links" id="nav-links" aria-label="Seções">
       <a href="../index.html#projetos">Projetos</a>
       <a href="#fluxo">Como funciona</a>
+      <a href="#demo">Teste</a>
       <a href="#decisoes">Decisões</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -105,6 +107,24 @@
           <figcaption><b>Tempo esgotado</b> Tela vermelha e um sino.</figcaption>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <section id="demo" class="escuro">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Teste aqui</h2>
+        <p>Uma versão do sistema que roda nesta página, com as mesmas regras: o painel manda os comandos, esta página conta o tempo no papel do servidor e cada tablet só mostra o que recebe. Desligue o Wi-Fi de um tablet, ou abra um deles em outra aba e deixe as duas lado a lado.</p>
+      </div>
+      <div class="demo-timer" data-demo-timer>
+        <div class="janela demo-painel"><span class="janela-barra">Painel central</span><div class="demo-cartoes"></div></div>
+        <div class="demo-tablets"></div>
+        <div class="demo-barra">
+          <button type="button" class="dt-btn" data-som>Ativar o som dos tablets</button>
+          <p>Os sons são os do sistema: três bipes nos últimos 30 segundos e um sino no fim. Para ver o aviso logo, escolha 30 s ou 1 min.</p>
+        </div>
+      </div>
+      <noscript><p>A demonstração precisa de JavaScript.</p></noscript>
     </div>
   </section>
 
@@ -187,5 +207,6 @@
 </dialog>
 
 <script src="../assets/js/site.js"></script>
+<script src="../assets/js/demo-timer.js"></script>
 </body>
 </html>

@@ -1,0 +1,120 @@
+/* Demonstração do timer de estações: o painel e os tablets que rodam no navegador.
+   Carregado pelo estudo de caso do timer (depois do estudo.css) e pela página do tablet em outra aba
+   (timer-tablet.html). As cores de fase são as do sistema; as razões de contraste estão anotadas. */
+
+:root{
+  --dt-andamento:#4F7029;   /* verde escurecido: 5,7:1 sobre branco */
+  --dt-aviso:#B45309;       /* âmbar: 5,0:1 sobre branco; branco sobre ele também 5,0:1 */
+  --dt-pausado:#334155;     /* slate: branco sobre ele 10,3:1 */
+  --dt-esgotado:#B91C1C;    /* vermelho: 6,5:1 sobre branco */
+  --dt-barra:#2553B7;       /* faixa de progresso em andamento */
+  --dt-online:#7EBC38;      /* só o ponto de conectado, nunca texto */
+}
+
+/* as classes abaixo dão display aos elementos e venceriam o [hidden] do navegador */
+.demo-timer [hidden],.dt-tela [hidden]{display:none !important}
+
+/* ---------- seção no estudo de caso ---------- */
+#demo{background:var(--navy);color:var(--no-escuro)}
+#demo .titulo-sec h2{color:#fff}
+#demo .titulo-sec p{color:var(--no-escuro-2)}
+.demo-painel{border-color:rgba(255,255,255,.14)}
+/* dentro do painel o fundo é claro: o foco volta à cor de ação, legível sobre ele */
+.demo-painel :focus-visible{outline-color:var(--acao)}
+.demo-cartoes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:20px}
+
+/* ---------- cartão de sala do painel ---------- */
+.dt-cartao{position:relative;display:flex;flex-direction:column;gap:14px;padding:18px 18px 22px;background:#fff;border:1px solid var(--borda);border-radius:12px;overflow:hidden;color:var(--tinta)}
+.dt-cabeca{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dt-nome{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.dt-fase{font-size:13px;font-weight:600;line-height:1.5;padding:2px 10px;border-radius:999px;background:#E2E8F0;color:#334155}
+.fase-running .dt-fase{background:#EAF3DE;color:#476525}   /* 6,2:1 */
+.fase-paused .dt-fase{background:var(--dt-pausado);color:#fff}
+.fase-finished .dt-fase{background:#FDE8E8;color:#B91C1C}  /* 5,6:1 */
+.fase-aviso .dt-fase{background:#FEF3C7;color:#92400E}     /* 6,4:1 */
+.dt-principal{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dt-tempo{font-size:40px;font-weight:700;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fase-aviso .dt-tempo{color:var(--dt-aviso)}
+.fase-finished .dt-tempo{color:var(--dt-esgotado)}
+.dt-controles,.dt-confirmar-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.dt-confirmar{display:grid;gap:10px}
+.dt-confirmar p{font-size:14px;line-height:1.5;color:var(--texto-2)}
+.dt-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:8px;border:1px solid transparent;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,border-color .15s}
+.dt-primario{background:var(--acao);color:#fff}           /* 5,2:1 */
+.dt-primario:hover{background:var(--acao-forte)}
+.dt-pausar{background:var(--dt-pausado);color:#fff}
+.dt-pausar:hover{background:#1E293B}
+.dt-secundario{background:#fff;border-color:#CBD5E1;color:var(--tinta)}
+.dt-secundario:hover{background:#F1F5F9}
+.dt-perigo{background:#fff;border-color:#F3C4C4;color:#B91C1C}
+.dt-perigo:hover{background:#FEF2F2}
+.dt-perigo-cheio{background:#B91C1C;color:#fff}
+.dt-perigo-cheio:hover{background:#991B1B}
+.dt-duracao{min-height:40px;padding:0 10px;border-radius:8px;border:1px solid #CBD5E1;background:#fff;font:inherit;font-size:14px;font-weight:600;color:var(--tinta);cursor:pointer}
+.dt-presenca{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--texto-2)}
+.dt-presenca::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:#CBD5E1}
+.dt-presenca.ok::before{background:var(--dt-online)}
+.dt-presenca.alerta{color:#B91C1C;font-weight:700}
+.dt-presenca.alerta::before{background:#B91C1C}
+.dt-progresso{position:absolute;left:0;right:0;bottom:0;height:4px;background:#E2E8F0}
+.dt-progresso div{height:100%;background:var(--dt-barra);transform-origin:left;transition:transform .9s linear}
+.fase-aviso .dt-progresso div{background:var(--dt-aviso)}
+.fase-paused .dt-progresso div{background:#94A3B8}
+.fase-finished .dt-progresso div{background:var(--dt-esgotado)}
+.fase-idle .dt-progresso div{background:#CBD5E1}
+
+/* ---------- tablets da página ---------- */
+.demo-tablets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px}
+.demo-tablets figure{display:grid;gap:14px}
+.demo-tablets figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.demo-tablets .dt-btn,.demo-barra .dt-btn{background:transparent;border-color:var(--borda-no-escuro);color:#fff}
+.demo-tablets .dt-btn:hover,.demo-barra .dt-btn:hover{background:rgba(255,255,255,.08)}
+.demo-tablets .dt-btn.desligado{border-color:#F59E9E;color:#FFC9C9}  /* 11,5:1 no navy */
+.demo-barra{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14)}
+.demo-barra p{flex:1 1 320px;font-size:15px;color:var(--no-escuro-2)}
+@media (max-width:880px){
+  .demo-cartoes{grid-template-columns:1fr;padding:14px}
+  .demo-tablets{grid-template-columns:1fr;max-width:440px}
+}
+
+/* ---------- tela do tablet (na página e na aba própria) ---------- */
+/* o tamanho do texto acompanha a largura da tela (cqw), como num tablet de verdade */
+.dt-tela{
+  --campo:#E2E8F0;--tinta-t:#0F172A;--rotulo:#334155;--barra:#64748B;--trilho:rgba(15,23,42,.12);
+  container-type:inline-size;position:relative;display:flex;flex-direction:column;aspect-ratio:16/10;
+  border-radius:8px;overflow:hidden;background:var(--campo);color:var(--tinta-t);transition:background-color .3s;
+}
+.dt-tela.running{--campo:#fff;--rotulo:var(--dt-andamento);--barra:var(--dt-barra);--trilho:rgba(15,23,42,.08)}
+.dt-tela.paused{--campo:var(--dt-pausado);--tinta-t:#fff;--rotulo:#fff;--barra:#CBD5E1;--trilho:rgba(255,255,255,.18)}
+.dt-tela.warning,.dt-tela.last10{--campo:var(--dt-aviso);--tinta-t:#fff;--rotulo:#fff;--barra:#fff;--trilho:rgba(255,255,255,.25)}
+.dt-tela.finished{--campo:var(--dt-esgotado);--tinta-t:#fff;--rotulo:#fff;--barra:#fff;--trilho:rgba(255,255,255,.25)}
+/* sem conexão há alguns segundos: o tempo mostrado pode estar parado */
+.dt-tela.stale{--campo:#E2E8F0;--tinta-t:#64748B;--rotulo:#B91C1C;--barra:#94A3B8;--trilho:rgba(15,23,42,.1)}
+.dt-tela-cabeca{display:flex;align-items:center;justify-content:space-between;gap:2cqw;padding:3cqw 4cqw 0}
+.dt-tela-sala{font-size:4.2cqw;font-weight:700;letter-spacing:-.01em}
+.dt-tela-conexao{font-size:2.8cqw;font-weight:600}
+.dt-tela-conexao.ao-vivo{width:2cqw;height:2cqw;border-radius:50%;background:var(--dt-online);box-shadow:0 0 0 .6cqw rgba(126,188,56,.25)}
+.dt-tela-corpo{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1cqw;padding:0 5cqw;text-align:center}
+.dt-tela-rotulo{font-size:4.4cqw;font-weight:700;color:var(--rotulo)}
+.dt-tela-tempo{font-size:min(21cqw,40cqh);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dt-tela-sub{font-size:2.8cqw;font-weight:500}
+.dt-tela-titulo{font-size:4.6cqw;font-weight:700;line-height:1.2;color:var(--tinta-t)}
+.dt-tela-texto{font-size:2.9cqw;line-height:1.45;max-width:60ch;color:#334155}
+.dt-tela-espera{font-size:3.4cqw;font-weight:600;color:#334155}
+.dt-tela-barra{height:2.2cqw;background:var(--trilho)}
+.dt-tela-barra div{height:100%;background:var(--barra);transform-origin:left;transition:transform .9s linear}
+@keyframes dt-pulso{50%{opacity:.55}}
+.dt-tela.last10 .dt-tela-tempo,.dt-tela.finished .dt-tela-tempo{animation:dt-pulso 1s ease-in-out infinite}
+
+/* aba própria: a tela ocupa o aparelho inteiro */
+.dt-pagina{margin:0;background:#0F172A}
+.dt-pagina .dt-tela{aspect-ratio:auto;height:100vh;height:100svh;border-radius:0;container-type:size}
+.dt-pagina .dt-tela-tempo{font-size:min(22cqw,42cqh)}
+.dt-ativar{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:0 0 6cqh;border:0;background:rgba(15,23,42,.35);cursor:pointer}
+.dt-ativar span{display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border-radius:999px;background:#fff;color:#0F172A;font-size:18px;font-weight:700;box-shadow:0 8px 24px rgba(15,23,42,.3)}
+.dt-ativar svg{width:22px;height:22px}
+
+@media (prefers-reduced-motion:reduce){
+  .dt-tela,.dt-tela-barra div,.dt-progresso div{transition:none}
+  .dt-tela .dt-tela-tempo{animation:none}
+}

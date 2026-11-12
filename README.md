@@ -9,11 +9,14 @@ index.html                     página inicial: apresentação, projetos, tecnol
 projetos/
   sistema-gestao-ti.html       estudo de caso do sistema de gestão de T.I
   timer-estacoes.html          estudo de caso do timer de estações
+  timer-tablet.html            tablet da demonstração do timer, aberto em outra aba (?sala=N)
   sorteio-evento.html          estudo de caso do sorteio de evento
 assets/
   css/estilo.css               estilos de todas as páginas (cores, tipografia, nav, rodapé, tela ampliada)
   css/estudo.css               estilos dos estudos de caso (ficha, passo a passo, decisões, galeria)
+  css/demo-timer.css           painel e tablets da demonstração do timer
   js/site.js                   menu, destaque da seção atual, copiar e-mail e tela ampliada
+  js/demo-timer.js             demonstração do timer: servidor, painel e tablets no navegador
   icones/                      ícone da aba e da tela inicial do celular
   fontes/                      Manrope (local, funciona offline) e a licença dela
   img/<projeto>/               capturas de cada projeto (nome.png), os recortes do sorteio (cadastro-foco, vencedor-cartao)
