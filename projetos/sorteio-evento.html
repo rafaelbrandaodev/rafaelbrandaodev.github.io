@@ -27,6 +27,7 @@
 -->
 <link rel="stylesheet" href="../assets/css/estilo.css">
 <link rel="stylesheet" href="../assets/css/estudo.css">
+<link rel="stylesheet" href="../assets/css/demo-sorteio.css">
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -39,6 +40,7 @@
     </button>
     <nav class="nav-links" id="nav-links" aria-label="Seções">
       <a href="../index.html#projetos">Projetos</a>
+      <a href="#demo">Teste</a>
       <a href="#fluxo">Como funciona</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -78,6 +80,114 @@
           <li>E impedir que um participante fosse sorteado mais de uma vez.</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section id="demo" class="escuro">
+    <div class="container">
+      <div class="titulo-sec">
+        <h2>Teste aqui</h2>
+        <p>Uma versão do sistema que roda nesta página, com as mesmas regras: cadastre-se no celular, confira seu nome na lista do painel e sorteie. Quem já foi sorteado não sai de novo.</p>
+      </div>
+      <div class="demo-sorteio" data-demo-sorteio>
+        <div>
+          <div class="celular">
+            <div class="ds-tela">
+              <div class="ds-tela-conteudo" data-tela="cadastro">
+                <p class="ds-titulo">Sorteio Congresso 2026</p>
+                <p class="ds-copia">Cadastre-se em menos de um minuto para concorrer.</p>
+                <form class="ds-cartao" id="ds-form" novalidate>
+                  <p class="so-leitor" aria-live="polite" id="ds-aviso"></p>
+                  <p class="ds-alerta" id="ds-alerta" role="alert" hidden></p>
+                  <fieldset>
+                    <legend class="ds-secao">Você é</legend>
+                    <div class="ds-tipos">
+                      <label class="ds-tipo"><input type="radio" name="tipo" value="profissional"><span><strong>Profissional</strong><small>Com registro e UF</small></span></label>
+                      <label class="ds-tipo"><input type="radio" name="tipo" value="estudante"><span><strong>Estudante</strong><small>Só estudantes</small></span></label>
+                    </div>
+                  </fieldset>
+                  <span class="ds-secao">Seus dados</span>
+                  <div class="ds-campo"><label for="ds-nome">Nome<span class="ds-obrigatorio" aria-hidden="true">*</span></label><input id="ds-nome" placeholder="Nome completo" autocomplete="off" maxlength="120"></div>
+                  <div class="ds-linha ds-so-profissional">
+                    <div class="ds-campo"><label for="ds-registro">Registro<span class="ds-obrigatorio" aria-hidden="true">*</span></label><input id="ds-registro" placeholder="123456" inputmode="numeric" autocomplete="off"></div>
+                    <div class="ds-campo"><label for="ds-uf">UF<span class="ds-obrigatorio" aria-hidden="true">*</span></label><select id="ds-uf"><option value="">UF</option></select></div>
+                  </div>
+                  <div class="ds-campo"><label for="ds-cpf">CPF<span class="ds-obrigatorio" aria-hidden="true">*</span></label><input id="ds-cpf" placeholder="000.000.000-00" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="ds-cpf-ajuda"><p class="ds-ajuda" id="ds-cpf-ajuda">Um cadastro por CPF.</p></div>
+                  <span class="ds-secao">Contato</span>
+                  <div class="ds-campo"><label for="ds-email">E-mail<span class="ds-obrigatorio" aria-hidden="true">*</span></label><input id="ds-email" type="email" placeholder="nome@exemplo.com" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+                  <div class="ds-campo"><label for="ds-whatsapp">WhatsApp<span class="ds-obrigatorio" aria-hidden="true">*</span></label><input id="ds-whatsapp" placeholder="(11) 99999-0000" inputmode="tel" autocomplete="off" maxlength="15"></div>
+                  <div class="ds-consentimento"><input type="checkbox" id="ds-consentimento"><label for="ds-consentimento">Autorizo o uso dos meus dados somente para a realização deste sorteio e para contato caso eu seja sorteado(a).<span class="ds-obrigatorio" aria-hidden="true">*</span></label></div>
+                  <button type="submit" class="ds-btn ds-btn-marca ds-enviar">Participar do sorteio</button>
+                </form>
+                <button type="button" class="ds-exemplo" data-acao="exemplo">Preencher com dados de exemplo</button>
+              </div>
+              <div class="ds-tela-conteudo" data-tela="confirmacao" hidden>
+                <div class="ds-cartao ds-confirmacao">
+                  <span class="ds-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                  <h3 class="ds-titulo" tabindex="-1" data-campo="titulo"></h3>
+                  <p class="ds-copia" data-campo="categoria"></p>
+                  <div class="ds-caixa-codigo"><span>Seu código de inscrição</span><strong data-campo="codigo"></strong></div>
+                  <button type="button" class="ds-link" data-acao="outra">Cadastrar outra pessoa</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="ds-legenda">Os dados ficam só nesta página e somem ao recarregar. Use dados de exemplo, se preferir.</p>
+        </div>
+        <div class="janela">
+          <span class="janela-barra">Painel de sorteio</span>
+          <div class="ds-painel">
+            <h3>Painel de sorteio</h3>
+            <div class="ds-numeros">
+              <div><span>Inscritos</span><strong data-n="total">0</strong></div>
+              <div><span>Profissionais</span><strong data-n="profissional">0</strong></div>
+              <div><span>Estudantes</span><strong data-n="estudante">0</strong></div>
+              <div class="ds-destaque"><span>Sorteados</span><strong data-n="sorteados">0</strong></div>
+            </div>
+            <div class="ds-bloco">
+              <p class="ds-rotulo-sec">Sorteio</p>
+              <div class="ds-sortear">
+                <button type="button" class="ds-btn ds-btn-marca" data-sortear="profissional">Sortear Profissionais</button>
+                <button type="button" class="ds-btn ds-btn-marca" data-sortear="estudante">Sortear Estudantes</button>
+              </div>
+              <div class="ds-resetar">
+                <button type="button" class="ds-btn ds-btn-casca" data-resetar="profissional">Resetar Profissionais</button>
+                <button type="button" class="ds-btn ds-btn-casca" data-resetar="estudante">Resetar Estudantes</button>
+              </div>
+            </div>
+            <div class="ds-bloco">
+              <p class="ds-rotulo-sec">Inscritos</p>
+              <p class="ds-contagem" aria-live="polite"></p>
+              <div class="ds-lista" tabindex="0" role="region" aria-label="Lista de inscritos">
+                <table>
+                  <thead><tr><th scope="col">Código</th><th scope="col">Nome</th><th scope="col">Categoria</th><th scope="col">Sorteado</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="ds-modal-titulo" hidden>
+              <div class="ds-modal-caixa">
+                <div class="ds-modal-topo"><h4 id="ds-modal-titulo">Vencedor do sorteio</h4><button type="button" class="ds-fechar" aria-label="Fechar">×</button></div>
+                <div data-etapa="suspense" aria-live="polite"><p class="ds-suspense">Sorteando…</p><div class="ds-carretel" aria-hidden="true"><span></span><span></span><span></span></div></div>
+                <p class="ds-falha" data-etapa="erro" role="alert" hidden></p>
+                <div class="ds-resultado" data-etapa="resultado" aria-live="polite" hidden>
+                  <p class="ds-rotulo-sec" data-campo="tipo"></p>
+                  <p class="ds-vencedor" data-campo="nome"></p>
+                  <span class="ds-codigo" data-campo="codigo"></span>
+                  <p class="ds-voce-marca" data-voce hidden>Seu cadastro foi o sorteado.</p>
+                  <dl class="ds-detalhes">
+                    <dt>Registro</dt><dd data-campo="registro"></dd>
+                    <dt>E-mail</dt><dd data-campo="email"></dd>
+                    <dt>CPF</dt><dd data-campo="cpf"></dd>
+                    <dt>WhatsApp</dt><dd data-campo="whatsapp"></dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <noscript><p>A demonstração precisa de JavaScript.</p></noscript>
     </div>
   </section>
 
@@ -145,5 +255,6 @@
 </dialog>
 
 <script src="../assets/js/site.js"></script>
+<script src="../assets/js/demo-sorteio.js"></script>
 </body>
 </html>
